@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markets — Agriconnect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+    <h1><a href="index.html">Agriconnect</a></h1>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="farmers.html">Farmers</a></li>
+            <li><a href="markets.html" class="active">Markets</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="signup.html" class="nav-cta">Join Now</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <span>›</span>
+            <span>Markets</span>
+        </div>
+        <h2>Find the <span>Best Deals</span><br>for Your Crops</h2>
+        <p>Browse hundreds of live produce listings from verified farmers across Ghana. Get the freshest stock at transparent, fair market prices.</p><br>
+        <div class="hero-buttons">
+            <a href="#listings" class="btn btn-primary">Browse Listings</a>
+            <a href="signup.html" class="btn btn-outline">Post Your Produce</a>
+        </div>
+    </section>
+
+    <!-- PRICE TICKER -->
+    <div class="ticker-section">
+        <div class="ticker-inner">
+            <div class="ticker-item"><span class="crop-name">🌽 Maize</span><span class="price">GH₵ 320/bag</span><span class="up">▲ 2.4%</span></div>
+            <div class="ticker-item"><span class="crop-name">🍅 Tomatoes</span><span class="price">GH₵ 85/crate</span><span class="down">▼ 1.1%</span></div>
+            <div class="ticker-item"><span class="crop-name">🍠 Yam</span><span class="price">GH₵ 210/bag</span><span class="up">▲ 3.7%</span></div>
+            <div class="ticker-item"><span class="crop-name">🍫 Cocoa</span><span class="price">GH₵ 1,450/bag</span><span class="up">▲ 0.9%</span></div>
+            <div class="ticker-item"><span class="crop-name">🍌 Plantain</span><span class="price">GH₵ 55/bunch</span><span class="down">▼ 0.5%</span></div>
+            <div class="ticker-item"><span class="crop-name">🫘 Cowpea</span><span class="price">GH₵ 420/bag</span><span class="up">▲ 1.8%</span></div>
+            <div class="ticker-item"><span class="crop-name">🌶️ Pepper</span><span class="price">GH₵ 110/crate</span><span class="flat">— 0.0%</span></div>
+            <div class="ticker-item"><span class="crop-name">🥬 Cabbage</span><span class="price">GH₵ 40/head</span><span class="up">▲ 4.2%</span></div>
+            <!-- Duplicate for seamless loop -->
+            <div class="ticker-item"><span class="crop-name">🌽 Maize</span><span class="price">GH₵ 320/bag</span><span class="up">▲ 2.4%</span></div>
+            <div class="ticker-item"><span class="crop-name">🍅 Tomatoes</span><span class="price">GH₵ 85/crate</span><span class="down">▼ 1.1%</span></div>
+            <div class="ticker-item"><span class="crop-name">🍠 Yam</span><span class="price">GH₵ 210/bag</span><span class="up">▲ 3.7%</span></div>
+            <div class="ticker-item"><span class="crop-name">🍫 Cocoa</span><span class="price">GH₵ 1,450/bag</span><span class="up">▲ 0.9%</span></div>
+            <div class="ticker-item"><span class="crop-name">🍌 Plantain</span><span class="price">GH₵ 55/bunch</span><span class="down">▼ 0.5%</span></div>
+            <div class="ticker-item"><span class="crop-name">🫘 Cowpea</span><span class="price">GH₵ 420/bag</span><span class="up">▲ 1.8%</span></div>
+            <div class="ticker-item"><span class="crop-name">🌶️ Pepper</span><span class="price">GH₵ 110/crate</span><span class="flat">— 0.0%</span></div>
+            <div class="ticker-item"><span class="crop-name">🥬 Cabbage</span><span class="price">GH₵ 40/head</span><span class="up">▲ 4.2%</span></div>
+        </div>
+    </div>
+
+    <!-- SEARCH & FILTER -->
+    <div class="search-section">
+        <div class="search-bar">
+            <div class="search-input-wrap">
+                <span>🔍</span>
+                <input type="text" placeholder="Search crops, farmers, regions..." />
+            </div>
+            <select class="filter-select">
+                <option value="">All Crops</option>
+                <option>Maize & Cereals</option>
+                <option>Tomatoes</option>
+                <option>Yam & Cassava</option>
+                <option>Cocoa</option>
+                <option>Plantain</option>
+                <option>Vegetables</option>
+                <option>Legumes</option>
+                <option>Fruits</option>
+                <option>Peppers & Spices</option>
+            </select>
+            <select class="filter-select">
+                <option value="">All Regions</option>
+                <option>Ashanti</option>
+                <option>Greater Accra</option>
+                <option>Western</option>
+                <option>Bono</option>
+                <option>Northern</option>
+                <option>Eastern</option>
+                <option>Volta</option>
+                <option>Central</option>
+                <option>North-East</option>
+                <option>Savannah</option>
+                <option>Upper West</option>
+                <option>Upper East</option>
+                <option>Oti</option>
+                <option>Ahafo</option>
+                <option>Western North</option>
+                <option>Bono East</option>
+            </select>
+            <button class="search-btn">Search</button>
+        </div>
+    </div>
+
+    <!-- LISTINGS -->
+    <section class="listings-section" id="listings">
+        <div class="listings-header">
+            <h2>Live Produce Listings</h2>
+            <span class="listings-count">Showing 9 of 248 listings</span>
+        </div>
+        <div class="listings-grid">
+
+            <div class="listing-card">
+                <div class="listing-banner banner-green">
+                    <span class="emoji">🌽</span>
+                    <span class="badge">Fresh Stock</span>
+                </div>
+                <div class="listing-body">
+                    <h3>White Maize — Grade A</h3>
+                    <div class="listing-meta">
+                        <span>📍 Ashanti Region</span>
+                        <span>⚖️ 500 bags available</span>
+                        <span>🌾 Harvested Mar 2026</span>
+                    </div>
+                    <div class="listing-price-row">
+                        <div class="listing-price">GH₵ 320 <span>/ 50kg bag</span></div>
+                        <span class="listing-tag tag-available">Available</span>
+                    </div>
+                </div>
+                <div class="listing-footer">
+                    <a href="contact.html" class="btn-contact">Contact Farmer</a>
+                    <a href="#" class="btn-details">View Details</a>
+                </div>
+            </div>
+
+            <div class="listing-card">
+                <div class="listing-banner banner-red">
+                    <span class="emoji">🍅</span>
+                    <span class="badge">Limited</span>
+                </div>
+                <div class="listing-body">
+                    <h3>Roma Tomatoes — Large</h3>
+                    <div class="listing-meta">
+                        <span>📍 Ahafo Region</span>
+                        <span>⚖️ 80 crates left</span>
+                        <span>🌾 Harvested Mar 2026</span>
+                    </div>
+                    <div class="listing-price-row">
+                        <div class="listing-price">GH₵ 85 <span>/ crate</span></div>
+                        <span class="listing-tag tag-limited">Limited</span>
+                    </div>
+                </div>
+                <div class="listing-footer">
+                    <a href="contact.html" class="btn-contact">Contact Farmer</a>
+                    <a href="#" class="btn-details">View Details</a>
+                </div>
+            </div>
+
+            <div class="listing-card">
+                <div class="listing-banner banner-earth">
+                    <span class="emoji">🍠</span>
+                    <span class="badge">Bulk Deal</span>
+                </div>
+                <div class="listing-body">
+                    <h3>Pona Yam — Premium</h3>
+                    <div class="listing-meta">
+                        <span>📍 Northern Region</span>
+                        <span>⚖️ 1,200 bags available</span>
+                        <span>🌾 Harvested Feb 2026</span>
+                    </div>
+                    <div class="listing-price-row">
+                        <div class="listing-price">GH₵ 210 <span>/ bag</span></div>
+                        <span class="listing-tag tag-available">Available</span>
+                    </div>
+                </div>
+                <div class="listing-footer">
+                    <a href="contact.html" class="btn-contact">Contact Farmer</a>
+                    <a href="#" class="btn-details">View Details</a>
+                </div>
+            </div>
+
+            <div class="listing-card">
+                <div class="listing-banner banner-gold">
+                    <span class="emoji">🍫</span>
+                    <span class="badge">Export Quality</span>
+                </div>
+                <div class="listing-body">
+                    <h3>Dry Cocoa Beans</h3>
+                    <div class="listing-meta">
+                        <span>📍 Western Region</span>
+                        <span>⚖️ 300 bags available</span>
+                        <span>🌾 Harvested Jan 2026</span>
+                    </div>
+                    <div class="listing-price-row">
+                        <div class="listing-price">GH₵ 1,450 <span>/ 64kg bag</span></div>
+                        <span class="listing-tag tag-available">Available</span>
+                    </div>
+                </div>
+                <div class="listing-footer">
+                    <a href="contact.html" class="btn-contact">Contact Farmer</a>
+                    <a href="#" class="btn-details">View Details</a>
+                </div>
+            </div>
+
+            <div class="listing-card">
+                <div class="listing-banner banner-teal">
+                    <span class="emoji">🥬</span>
+                    <span class="badge">Fresh Stock</span>
+                </div>
+                <div class="listing-body">
+                    <h3>Cabbage — Medium Size</h3>
+                    <div class="listing-meta">
+                        <span>📍 Eastern Region</span>
+                        <span>⚖️ 400 heads available</span>
+                        <span>🌾 Harvested Mar 2026</span>
+                    </div>
+                    <div class="listing-price-row">
+                        <div class="listing-price">GH₵ 40 <span>/ head</span></div>
+                        <span class="listing-tag tag-available">Available</span>
+                    </div>
+                </div>
+                <div class="listing-footer">
+                    <a href="contact.html" class="btn-contact">Contact Farmer</a>
+                    <a href="#" class="btn-details">View Details</a>
+                </div>
+            </div>
+
+            <div class="listing-card">
+                <div class="listing-banner banner-green">
+                    <span class="emoji">🍌</span>
+                    <span class="badge">New Listing</span>
+                </div>
+                <div class="listing-body">
+                    <h3>Plantain — Ripe & Unripe</h3>
+                    <div class="listing-meta">
+                        <span>📍 Volta Region</span>
+                        <span>⚖️ 600 bunches available</span>
+                        <span>🌾 Harvested Mar 2026</span>
+                    </div>
+                    <div class="listing-price-row">
+                        <div class="listing-price">GH₵ 55 <span>/ bunch</span></div>
+                        <span class="listing-tag tag-available">Available</span>
+                    </div>
+                </div>
+                <div class="listing-footer">
+                    <a href="contact.html" class="btn-contact">Contact Farmer</a>
+                    <a href="#" class="btn-details">View Details</a>
+                </div>
+            </div>
+
+            <div class="listing-card">
+                <div class="listing-banner banner-purple">
+                    <span class="emoji">🫘</span>
+                    <span class="badge">Organic</span>
+                </div>
+                <div class="listing-body">
+                    <h3>Black-Eyed Cowpea</h3>
+                    <div class="listing-meta">
+                        <span>📍 Upper East Region</span>
+                        <span>⚖️ 200 bags available</span>
+                        <span>🌾 Harvested Feb 2026</span>
+                    </div>
+                    <div class="listing-price-row">
+                        <div class="listing-price">GH₵ 420 <span>/ 50kg bag</span></div>
+                        <span class="listing-tag tag-available">Available</span>
+                    </div>
+                </div>
+                <div class="listing-footer">
+                    <a href="contact.html" class="btn-contact">Contact Farmer</a>
+                    <a href="#" class="btn-details">View Details</a>
+                </div>
+            </div>
+
+            <div class="listing-card">
+                <div class="listing-banner banner-red">
+                    <span class="emoji">🌶️</span>
+                    <span class="badge">Spicy Grade</span>
+                </div>
+                <div class="listing-body">
+                    <h3>Shito Pepper — Dry</h3>
+                    <div class="listing-meta">
+                        <span>📍 Greater Accra</span>
+                        <span>⚖️ 150 crates left</span>
+                        <span>🌾 Harvested Feb 2026</span>
+                    </div>
+                    <div class="listing-price-row">
+                        <div class="listing-price">GH₵ 110 <span>/ crate</span></div>
+                        <span class="listing-tag tag-limited">Limited</span>
+                    </div>
+                </div>
+                <div class="listing-footer">
+                    <a href="contact.html" class="btn-contact">Contact Farmer</a>
+                    <a href="#" class="btn-details">View Details</a>
+                </div>
+            </div>
+
+            <div class="listing-card">
+                <div class="listing-banner banner-earth">
+                    <span class="emoji">🍠</span>
+                    <span class="badge">Bulk Deal</span>
+                </div>
+                <div class="listing-body">
+                    <h3>Cassava — Fresh Tubers</h3>
+                    <div class="listing-meta">
+                        <span>📍 Central Region</span>
+                        <span>⚖️ 800 bags available</span>
+                        <span>🌾 Harvested Mar 2026</span>
+                    </div>
+                    <div class="listing-price-row">
+                        <div class="listing-price">GH₵ 130 <span>/ bag</span></div>
+                        <span class="listing-tag tag-available">Available</span>
+                    </div>
+                </div>
+                <div class="listing-footer">
+                    <a href="contact.html" class="btn-contact">Contact Farmer</a>
+                    <a href="#" class="btn-details">View Details</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="signup.html" class="btn btn-green">Load More Listings</a>
+        </div>
+    </section>
+
+    <!-- REGIONS -->
+    <section class="regions-section">
+        <h2>Browse by Region</h2>
+        <p>Find produce from farmers across all regions of Ghana.</p>
+        <div class="regions-grid">
+            <div class="region-card"><div class="icon">🌿</div><h4>Ashanti</h4><p>324 listings</p></div>
+            <div class="region-card"><div class="icon">🏙️</div><h4>Greater Accra</h4><p>198 listings</p></div>
+            <div class="region-card"><div class="icon">🌊</div><h4>Western</h4><p>156 listings</p></div>
+            <div class="region-card"><div class="icon">🌾</div><h4>Bono</h4><p>210 listings</p></div>
+            <div class="region-card"><div class="icon">☀️</div><h4>Northern</h4><p>187 listings</p></div>
+            <div class="region-card"><div class="icon">🍃</div><h4>Eastern</h4><p>143 listings</p></div>
+            <div class="region-card"><div class="icon">⚡</div><h4>Volta</h4><p>119 listings</p></div>
+            <div class="region-card"><div class="icon">🌴</div><h4>Central</h4><p>134 listings</p></div>
+            <div class="region-card"><div class="icon">🌳</div><h4>Savannah</h4><p>165 listings</p></div>
+            <div class="region-card"><div class="icon">🌾</div><h4>Upper West</h4><p>112 listings</p></div>
+            <div class="region-card"><div class="icon">🏜️</div><h4>North-East</h4><p>198 listings</p></div>
+            <div class="region-card"><div class="icon">🌾</div><h4>Upper East</h4><p>187 listings</p></div>
+            <div class="region-card"><div class="icon">🌿</div><h4>Western North</h4><p>143 listings</p></div>
+            <div class="region-card"><div class="icon">🌾</div><h4>Ahafo</h4><p>119 listings</p></div>
+            <div class="region-card"><div class="icon">🌾</div><h4>Bono East</h4><p>134 listings</p></div>
+            <div class="region-card"><div class="icon">🌿</div><h4>Oti</h4><p>143 listings</p></div>
+
+        </div>
+    </section>
+
+    <!-- PRICE TABLE -->
+    <section class="price-section">
+        <h2>Today's Market Prices</h2>
+        <p>Live prices updated daily. Last updated: Sunday, 15 March 2026 — 08:00 GMT</p>
+        <div class="price-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Crop</th>
+                        <th>Unit</th>
+                        <th>Avg. Price</th>
+                        <th>7-Day Trend</th>
+                        <th>Region</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><div class="crop-cell">🌽 Maize (White)</div></td>
+                        <td>50kg bag</td>
+                        <td class="price-cell">GH₵ 320</td>
+                        <td><span class="trend-up">▲ 2.4%</span></td>
+                        <td>Ashanti</td>
+                    </tr>
+                    <tr>
+                        <td><div class="crop-cell">🍅 Tomatoes (Roma)</div></td>
+                        <td>Crate</td>
+                        <td class="price-cell">GH₵ 85</td>
+                        <td><span class="trend-down">▼ 1.1%</span></td>
+                        <td>Bono</td>
+                    </tr>
+                    <tr>
+                        <td><div class="crop-cell">🍠 Pona Yam</div></td>
+                        <td>Bag</td>
+                        <td class="price-cell">GH₵ 210</td>
+                        <td><span class="trend-up">▲ 3.7%</span></td>
+                        <td>Northern</td>
+                    </tr>
+                    <tr>
+                        <td><div class="crop-cell">🍫 Cocoa Beans</div></td>
+                        <td>64kg bag</td>
+                        <td class="price-cell">GH₵ 1,450</td>
+                        <td><span class="trend-up">▲ 0.9%</span></td>
+                        <td>Western</td>
+                    </tr>
+                    <tr>
+                        <td><div class="crop-cell">🍌 Plantain</div></td>
+                        <td>Bunch</td>
+                        <td class="price-cell">GH₵ 55</td>
+                        <td><span class="trend-down">▼ 0.5%</span></td>
+                        <td>Volta</td>
+                    </tr>
+                    <tr>
+                        <td><div class="crop-cell">🫘 Cowpea</div></td>
+                        <td>50kg bag</td>
+                        <td class="price-cell">GH₵ 420</td>
+                        <td><span class="trend-up">▲ 1.8%</span></td>
+                        <td>Upper East</td>
+                    </tr>
+                    <tr>
+                        <td><div class="crop-cell">🌶️ Shito Pepper</div></td>
+                        <td>Crate</td>
+                        <td class="price-cell">GH₵ 110</td>
+                        <td><span class="trend-flat">— 0.0%</span></td>
+                        <td>Greater Accra</td>
+                    </tr>
+                    <tr>
+                        <td><div class="crop-cell">🥬 Cabbage</div></td>
+                        <td>Per head</td>
+                        <td class="price-cell">GH₵ 40</td>
+                        <td><span class="trend-up">▲ 4.2%</span></td>
+                        <td>Eastern</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- FOR BUYERS -->
+    <section style="background: var(--green-dark); padding: 6rem 5%;">
+        <div class="buyers-section" style="padding: 0;">
+            <div class="buyers-text">
+                <h2>Are You a <span>Buyer?</span></h2>
+                <p>Agriconnect makes it easy for businesses, retailers, and restaurants to source fresh produce directly from verified farmers — at the best prices with no middlemen.</p>
+                <a href="signup.html" class="btn btn-primary" style="margin-top: 0.5rem;">Register as a Buyer</a>
+            </div>
+            <div class="buyers-perks">
+                <div class="perk">
+                    <div class="perk-icon">✅</div>
+                    <div>
+                        <h4>Verified Farmers Only</h4>
+                        <p>Every farmer is screened. You get quality produce from trusted, verified sources every time.</p>
+                    </div>
+                </div>
+                <div class="perk">
+                    <div class="perk-icon">💰</div>
+                    <div>
+                        <h4>Competitive Pricing</h4>
+                        <p>Cut out the middlemen and buy direct — saving you money and supporting farmers fairly.</p>
+                    </div>
+                </div>
+                <div class="perk">
+                    <div class="perk-icon">📦</div>
+                    <div>
+                        <h4>Reliable Supply Chain</h4>
+                        <p>Build relationships with farmers for recurring orders and reliable weekly or monthly supply.</p>
+                    </div>
+                </div>
+                <div class="perk">
+                    <div class="perk-icon">🔔</div>
+                    <div>
+                        <h4>Price Alerts</h4>
+                        <p>Set alerts for your preferred crops and get notified when prices drop or new stock is listed.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2>Ready to Start Trading?</h2>
+        <p>Join thousands of farmers and buyers already using Agriconnect to trade smarter and earn more.</p>
+        <div class="cta-buttons">
+            <a href="signup.html" class="btn btn-primary">Create Free Account</a>
+            <a href="contact.html" class="btn btn-outline">Talk to Our Team</a>
+        </div>
+    </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <h3>Agriconnect</h3>
+            <p>Empowering farmers across Africa by connecting them directly to buyers and markets — fairly, transparently, and efficiently.</p>
+        </div>
+        <div class="footer-links">
+            <h4>Platform</h4>
+            <ul>
+                <li><a href="farmers.html">For Farmers</a></li>
+                <li><a href="markets.html">Browse Markets</a></li>
+                <li><a href="signup.html">Sign Up</a></li>
+                <li><a href="login.html">Log In</a></li>
+            </ul>
+        </div>
+        <div class="footer-links">
+            <h4>Company</h4>
+            <ul>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="terms.html">Terms of Use</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2026 Agriconnect. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>

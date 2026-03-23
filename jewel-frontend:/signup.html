@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up — Agriconnect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+    <h1><a href="index.html">Agriconnect</a></h1>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="farmers.html">Farmers</a></li>
+            <li><a href="markets.html">Markets</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="login.html" class="nav-login">Log In</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="signup-page">
+
+    <!-- LEFT PANEL -->
+    <div class="signup-left">
+        <div class="left-content">
+            <div class="left-badge">🌱 Free to Join</div>
+            <h2>Start Selling <span>Smarter</span><br>Today</h2>
+            <p>Join thousands of farmers and buyers across Ghana who are already trading directly, earning more, and growing their businesses with Agriconnect.</p>
+
+            <div class="perks-list">
+                <div class="perk-row">
+                    <div class="perk-icon">✅</div>
+                    <p><strong>Free account</strong> — no setup fees or hidden charges</p>
+                </div>
+                <div class="perk-row">
+                    <div class="perk-icon">📈</div>
+                    <p><strong>Real-time prices</strong> — know your crop's market value instantly</p>
+                </div>
+                <div class="perk-row">
+                    <div class="perk-icon">🤝</div>
+                    <p><strong>Verified buyers</strong> — trade safely with screened partners</p>
+                </div>
+                <div class="perk-row">
+                    <div class="perk-icon">📦</div>
+                    <p><strong>Logistics support</strong> — get your produce delivered hassle-free</p>
+                </div>
+                <div class="perk-row">
+                    <div class="perk-icon">💬</div>
+                    <p><strong>Direct messaging</strong> — negotiate deals without middlemen</p>
+                </div>
+            </div>
+
+            <div class="left-stats">
+                <div class="left-stat">
+                    <div class="num">2,400+</div>
+                    <div class="lbl">Farmers</div>
+                </div>
+                <div class="left-stat">
+                    <div class="num">850+</div>
+                    <div class="lbl">Buyers</div>
+                </div>
+                <div class="left-stat">
+                    <div class="num">120+</div>
+                    <div class="lbl">Markets</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="signup-right">
+
+        <!-- Main form (hidden when success) -->
+        <div id="formContainer">
+            <h3>Create Your Account</h3><br>
+            <p>Already have an account? <a href="login.html">Log in here</a></p><br>
+
+            <!-- ROLE TOGGLE -->
+            <div class="role-toggle">
+                <button class="role-btn active" onclick="setRole('farmer', this)">🌾 I'm a Farmer</button>
+                <button class="role-btn" onclick="setRole('buyer', this)">🛒 I'm a Buyer</button>
+            </div>
+
+            <!-- STEPS INDICATOR -->
+            <div class="steps-indicator">
+                <div class="step-dot active" id="dot1">1</div>
+                <div class="step-line" id="line1"></div>
+                <div class="step-dot" id="dot2">2</div>
+                <div class="step-line" id="line2"></div>
+                <div class="step-dot" id="dot3">3</div>
+                <div class="step-line" id="line3"></div>
+                <div class="step-dot" id="dot4">4</div>
+            </div>
+            <div class="steps-labels">
+                <div class="step-label-item active" id="label1">Personal Info</div>
+                <div class="step-label-item" id="label2">Farm Details</div>
+                <div class="step-label-item" id="label3">Set Password</div>
+                <div class="step-label-item" id="label4">Verify OTP</div>
+            </div>
+
+            <!-- STEP 1: PERSONAL INFO -->
+            <div class="form-step active" id="step1">
+                <div class="social-signup">
+                    <button class="social-btn-signup">🇬 Sign up with Google</button>
+                    <button class="social-btn-signup">📘 Sign up with Facebook</button>
+                </div>
+
+                <div class="divider"><span>or fill in your details</span></div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <input type="text" id="fname" placeholder="e.g. Kwame" />
+                        <span class="error-msg" id="fnameErr">Please enter your first name.</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" id="lname" placeholder="e.g. Asante" />
+                        <span class="error-msg" id="lnameErr">Please enter your last name.</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="email" placeholder="you@example.com" />
+                    <span class="error-msg" id="emailErr">Please enter a valid email address.</span>
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="phone" placeholder="+233 XX XXX XXXX" />
+                    <span class="error-msg" id="phoneErr">Please enter your phone number.</span>
+                </div>
+
+                <div class="form-group">
+                    <label>Region</label>
+                    <select id="region">
+                        <option value="">Select your region</option>
+                        <option>Ashanti</option>
+                        <option>Greater Accra</option>
+                        <option>Western</option>
+                        <option>Brong-Ahafo</option>
+                        <option>Northern</option>
+                        <option>Eastern</option>
+                        <option>Volta</option>
+                        <option>Central</option>
+                        <option>Upper East</option>
+                        <option>Upper West</option>
+                        <option>Oti</option>
+                        <option>Savannah</option>
+                        <option>North East</option>
+                        <option>Western North</option>
+                        <option>Ahafo</option>
+                        <option>Bono East</option>
+                    </select>
+                    <span class="error-msg" id="regionErr">Please select your region.</span>
+                </div>
+
+                <div class="form-nav">
+                    <button class="btn-next" onclick="nextStep(1)">Continue →</button>
+                </div>
+            </div>
+
+            <!-- STEP 2: FARM / BUSINESS DETAILS -->
+            <div class="form-step" id="step2">
+                <div class="form-group">
+                    <label id="bizLabel">Farm Name</label>
+                    <input type="text" id="bizName" placeholder="e.g. Asante Family Farm" />
+                    <span class="error-msg" id="bizErr">Please enter your farm or business name.</span>
+                </div>
+
+                <div class="form-group">
+                    <label id="cropLabel">Primary Crop / Product</label>
+                    <select id="cropType">
+                        <option value="">Select your main crop</option>
+                        <option>Maize & Cereals</option>
+                        <option>Tomatoes</option>
+                        <option>Yam & Cassava</option>
+                        <option>Cocoa</option>
+                        <option>Plantain</option>
+                        <option>Vegetables</option>
+                        <option>Legumes (Cowpea, Soybean)</option>
+                        <option>Fruits</option>
+                        <option>Peppers & Spices</option>
+                        <option>Palm Oil</option>
+                        <option>Other</option>
+                    </select>
+                    <span class="error-msg" id="cropErr">Please select your primary crop or product.</span>
+                </div>
+
+                <div class="form-group" id="farmSizeGroup">
+                    <label>Farm Size</label>
+                    <select id="farmSize">
+                        <option value="">Select farm size</option>
+                        <option>Less than 1 acre</option>
+                        <option>1 – 5 acres</option>
+                        <option>5 – 20 acres</option>
+                        <option>20 – 50 acres</option>
+                        <option>50+ acres</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>How did you hear about us?</label>
+                    <select id="referral">
+                        <option value="">Select an option</option>
+                        <option>Friend or Family</option>
+                        <option>Social Media</option>
+                        <option>Radio or TV</option>
+                        <option>Market / Community</option>
+                        <option>Agricultural Extension Officer</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+
+                <div class="form-nav">
+                    <button class="btn-back" onclick="prevStep(2)">← Back</button>
+                    <button class="btn-next" onclick="nextStep(2)">Continue →</button>
+                </div>
+            </div>
+
+            <!-- STEP 3: PASSWORD & CONFIRM -->
+            <div class="form-step" id="step3">
+                <div class="form-group">
+                    <label>Create Password</label>
+                    <div class="password-wrap">
+                        <input type="password" id="pw1" placeholder="At least 8 characters" oninput="checkStrength()" />
+                        <button class="toggle-pw" type="button" onclick="togglePw('pw1', this)">👁</button>
+                    </div>
+                    <div class="pw-strength">
+                        <div class="pw-bar" id="bar1"></div>
+                        <div class="pw-bar" id="bar2"></div>
+                        <div class="pw-bar" id="bar3"></div>
+                        <div class="pw-bar" id="bar4"></div>
+                    </div>
+                    <div class="pw-label" id="pwLabel">Enter a password</div>
+                    <span class="error-msg" id="pw1Err">Password must be at least 8 characters.</span>
+                </div>
+
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <div class="password-wrap">
+                        <input type="password" id="pw2" placeholder="Re-enter your password" />
+                        <button class="toggle-pw" type="button" onclick="togglePw('pw2', this)">👁</button>
+                    </div>
+                    <span class="error-msg" id="pw2Err">Passwords do not match.</span>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="terms" />
+                    <label for="terms">I agree to the <a href="terms.html">Terms of Use</a> and <a href="privacy.html">Privacy Policy</a></label>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="newsletter" checked />
+                    <label for="newsletter">Send me market updates, price alerts, and farming tips</label>
+                </div>
+
+                <span class="error-msg" id="termsErr" style="margin-bottom: 1rem;">Please accept the Terms of Use to continue.</span>
+
+                <div class="form-nav">
+                    <button class="btn-back" onclick="prevStep(3)">← Back</button>
+                    <button class="btn-submit" onclick="submitForm()">Send OTP &amp; Continue →</button>
+                </div>
+            </div>
+        </div>
+
+
+            <!-- STEP 4: OTP VERIFICATION -->
+            <div class="form-step" id="step4">
+                <div class="otp-header">
+                    <div class="otp-icon">📱</div>
+                    <h4>Verify Your Number</h4>
+                    <p id="otpSubtitle">We sent a 6-digit code to your number. Enter it below to confirm your account.</p>
+                </div>
+
+                <div class="otp-boxes">
+                    <input class="otp-box" type="text" maxlength="1" id="otp0" oninput="otpInput(0)" onkeydown="otpKey(event,0)" />
+                    <input class="otp-box" type="text" maxlength="1" id="otp1" oninput="otpInput(1)" onkeydown="otpKey(event,1)" />
+                    <input class="otp-box" type="text" maxlength="1" id="otp2" oninput="otpInput(2)" onkeydown="otpKey(event,2)" />
+                    <span class="otp-dash">&#8212;</span>
+                    <input class="otp-box" type="text" maxlength="1" id="otp3" oninput="otpInput(3)" onkeydown="otpKey(event,3)" />
+                    <input class="otp-box" type="text" maxlength="1" id="otp4" oninput="otpInput(4)" onkeydown="otpKey(event,4)" />
+                    <input class="otp-box" type="text" maxlength="1" id="otp5" oninput="otpInput(5)" onkeydown="otpKey(event,5)" />
+                </div>
+
+                <div class="otp-status" id="otpStatus"></div>
+
+                <div class="otp-timer-row">
+                    <span id="timerText">Code expires in <strong id="countdown">02:00</strong></span>
+                    <button class="resend-btn" id="resendBtn" onclick="resendOTP()" disabled>Resend Code</button>
+                </div>
+
+                <div class="form-nav" style="margin-top:1.5rem;">
+                    <button class="btn-back" onclick="prevStep(4)">&#8592; Back</button>
+                    <button class="btn-submit" onclick="verifyOTP()">Verify &amp; Finish &#10003;</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUCCESS SCREEN -->
+        <div class="success-screen" id="successScreen">
+            <div class="success-circle">🎉</div>
+            <h3>You're In!</h3>
+            <p>Your Agriconnect account has been created successfully. You can now start browsing markets, listing your produce, and connecting with buyers.</p>
+            <div class="success-actions">
+                <a href="markets.html" class="btn-go btn-go-primary">Browse Markets</a>
+                <a href="farmers.html" class="btn-go btn-go-outline">Learn More</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    let currentStep = 1;
+    let currentRole = 'farmer';
+    let generatedOTP = '';
+    let otpTimer = null;
+    let otpSeconds = 120;
+
+    function setRole(role, btn) {
+        currentRole = role;
+        document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        if (role === 'buyer') {
+            document.getElementById('bizLabel').textContent = 'Business Name';
+            document.getElementById('bizName').placeholder = 'e.g. Accra Fresh Foods Ltd';
+            document.getElementById('cropLabel').textContent = 'Primary Product Interest';
+            document.getElementById('farmSizeGroup').style.display = 'none';
+            document.getElementById('label2').textContent = 'Business Details';
+        } else {
+            document.getElementById('bizLabel').textContent = 'Farm Name';
+            document.getElementById('bizName').placeholder = 'e.g. Asante Family Farm';
+            document.getElementById('cropLabel').textContent = 'Primary Crop / Product';
+            document.getElementById('farmSizeGroup').style.display = 'flex';
+            document.getElementById('label2').textContent = 'Farm Details';
+        }
+    }
+
+    function nextStep(from) {
+        if (!validateStep(from)) return;
+        goToStep(from + 1);
+    }
+
+    function prevStep(from) {
+        goToStep(from - 1);
+    }
+
+    function goToStep(step) {
+        document.getElementById('step' + currentStep).classList.remove('active');
+        currentStep = step;
+        document.getElementById('step' + currentStep).classList.add('active');
+        updateIndicator();
+    }
+
+    function updateIndicator() {
+        for (let i = 1; i <= 4; i++) {
+            const dot = document.getElementById('dot' + i);
+            const lbl = document.getElementById('label' + i);
+            dot.classList.remove('active', 'done');
+            lbl.classList.remove('active');
+            if (i < currentStep) { dot.classList.add('done'); dot.textContent = '✓'; }
+            else if (i === currentStep) { dot.classList.add('active'); dot.textContent = i; lbl.classList.add('active'); }
+            else { dot.textContent = i; }
+        }
+        for (let i = 1; i <= 3; i++) {
+            const line = document.getElementById('line' + i);
+            if (line) line.classList.toggle('done', i < currentStep);
+        }
+    }
+
+    function validateStep(step) {
+        let valid = true;
+        const clearErr = (id) => {
+            document.getElementById(id).classList.remove('show');
+            const input = document.getElementById(id.replace('Err', ''));
+            if (input) input.classList.remove('error');
+        };
+        const showErr = (fieldId, errId) => {
+            document.getElementById(errId).classList.add('show');
+            const input = document.getElementById(fieldId);
+            if (input) input.classList.add('error');
+            valid = false;
+        };
+        if (step === 1) {
+            ['fname', 'lname', 'email', 'phone', 'region'].forEach(f => clearErr(f + 'Err'));
+            if (!document.getElementById('fname').value.trim()) showErr('fname', 'fnameErr');
+            if (!document.getElementById('lname').value.trim()) showErr('lname', 'lnameErr');
+            const em = document.getElementById('email').value;
+            if (!em || !em.includes('@')) showErr('email', 'emailErr');
+            if (!document.getElementById('phone').value.trim()) showErr('phone', 'phoneErr');
+            if (!document.getElementById('region').value) showErr('region', 'regionErr');
+        }
+        if (step === 2) {
+            clearErr('bizErr'); clearErr('cropErr');
+            if (!document.getElementById('bizName').value.trim()) showErr('bizName', 'bizErr');
+            if (!document.getElementById('cropType').value) showErr('cropType', 'cropErr');
+        }
+        return valid;
+    }
+
+    function submitForm() {
+        document.getElementById('pw1Err').classList.remove('show');
+        document.getElementById('pw2Err').classList.remove('show');
+        document.getElementById('termsErr').classList.remove('show');
+        const pw1 = document.getElementById('pw1').value;
+        const pw2 = document.getElementById('pw2').value;
+        const terms = document.getElementById('terms').checked;
+        let valid = true;
+        if (pw1.length < 8) { document.getElementById('pw1Err').classList.add('show'); valid = false; }
+        if (pw1 !== pw2)    { document.getElementById('pw2Err').classList.add('show'); valid = false; }
+        if (!terms)          { document.getElementById('termsErr').classList.add('show'); valid = false; }
+        if (!valid) return;
+
+        // Generate OTP and move to step 4
+        sendOTP();
+        goToStep(4);
+    }
+
+    function sendOTP() {
+        // Simulate generating a 6-digit OTP
+        generatedOTP = String(Math.floor(100000 + Math.random() * 900000));
+        const phone = document.getElementById('phone').value;
+        document.getElementById('otpSubtitle').textContent =
+            'We sent a 6-digit code to ' + phone + '. Enter it below to confirm your account.';
+
+        // Show OTP in console for demo purposes (in production this would be sent via SMS)
+        console.log('%c🔐 Demo OTP Code: ' + generatedOTP, 'font-size:16px; color:green; font-weight:bold;');
+
+        // Show a demo hint on the page
+        const status = document.getElementById('otpStatus');
+        status.className = 'otp-status success';
+        status.textContent = '✅ Demo mode — your OTP is: ' + generatedOTP;
+
+        startTimer();
+        document.getElementById('otp0').focus();
+    }
+
+    function startTimer() {
+        clearInterval(otpTimer);
+        otpSeconds = 120;
+        document.getElementById('resendBtn').disabled = true;
+        updateTimerDisplay();
+        otpTimer = setInterval(() => {
+            otpSeconds--;
+            updateTimerDisplay();
+            if (otpSeconds <= 0) {
+                clearInterval(otpTimer);
+                document.getElementById('countdown').textContent = 'Expired';
+                document.getElementById('countdown').classList.add('expired');
+                document.getElementById('timerText').childNodes[0].textContent = 'Code has ';
+                document.getElementById('resendBtn').disabled = false;
+            }
+        }, 1000);
+    }
+
+    function updateTimerDisplay() {
+        const m = String(Math.floor(otpSeconds / 60)).padStart(2, '0');
+        const s = String(otpSeconds % 60).padStart(2, '0');
+        const el = document.getElementById('countdown');
+        el.textContent = m + ':' + s;
+        el.classList.remove('expired');
+    }
+
+    function resendOTP() {
+        // Clear all boxes
+        for (let i = 0; i < 6; i++) {
+            const box = document.getElementById('otp' + i);
+            box.value = '';
+            box.classList.remove('filled', 'error-box', 'success-box');
+        }
+        document.getElementById('otpStatus').textContent = '';
+        document.getElementById('otpStatus').className = 'otp-status';
+        sendOTP();
+    }
+
+    function otpInput(index) {
+        const box = document.getElementById('otp' + index);
+        const val = box.value.replace(/[^0-9]/g, '');
+        box.value = val;
+        box.classList.toggle('filled', val.length > 0);
+        if (val && index < 5) {
+            document.getElementById('otp' + (index + 1)).focus();
+        }
+        // Auto verify when all 6 filled
+        const full = Array.from({length:6}, (_,i) => document.getElementById('otp'+i).value).join('');
+        if (full.length === 6) verifyOTP(true);
+    }
+
+    function otpKey(e, index) {
+        if (e.key === 'Backspace') {
+            const box = document.getElementById('otp' + index);
+            if (!box.value && index > 0) {
+                document.getElementById('otp' + (index - 1)).focus();
+            }
+            box.classList.remove('filled');
+        }
+        if (e.key === 'ArrowLeft' && index > 0) document.getElementById('otp' + (index-1)).focus();
+        if (e.key === 'ArrowRight' && index < 5) document.getElementById('otp' + (index+1)).focus();
+    }
+
+    function verifyOTP(auto = false) {
+        const entered = Array.from({length:6}, (_,i) => document.getElementById('otp'+i).value).join('');
+        const status = document.getElementById('otpStatus');
+
+        if (entered.length < 6) {
+            status.className = 'otp-status error';
+            status.textContent = '⚠️ Please enter all 6 digits.';
+            return;
+        }
+
+        if (entered === generatedOTP) {
+            // Success
+            for (let i = 0; i < 6; i++) document.getElementById('otp'+i).classList.add('success-box');
+            status.className = 'otp-status success';
+            status.textContent = '✅ Code verified successfully!';
+            clearInterval(otpTimer);
+            setTimeout(() => {
+                document.getElementById('formContainer').style.display = 'none';
+                document.getElementById('successScreen').classList.add('show');
+            }, 800);
+        } else {
+            // Wrong code
+            for (let i = 0; i < 6; i++) {
+                const box = document.getElementById('otp'+i);
+                box.classList.add('error-box');
+                setTimeout(() => box.classList.remove('error-box'), 600);
+            }
+            status.className = 'otp-status error';
+            status.textContent = '❌ Incorrect code. Please try again.';
+            if (!auto) {
+                for (let i = 0; i < 6; i++) {
+                    document.getElementById('otp'+i).value = '';
+                    document.getElementById('otp'+i).classList.remove('filled');
+                }
+                document.getElementById('otp0').focus();
+            }
+        }
+    }
+
+    function togglePw(fieldId, btn) {
+        const input = document.getElementById(fieldId);
+        if (input.type === 'password') { input.type = 'text'; btn.textContent = '🙈'; }
+        else { input.type = 'password'; btn.textContent = '👁'; }
+    }
+
+    function checkStrength() {
+        const pw = document.getElementById('pw1').value;
+        const bars = [document.getElementById('bar1'), document.getElementById('bar2'),
+                      document.getElementById('bar3'), document.getElementById('bar4')];
+        const label = document.getElementById('pwLabel');
+        bars.forEach(b => b.className = 'pw-bar');
+        let score = 0;
+        if (pw.length >= 8)  score++;
+        if (/[A-Z]/.test(pw)) score++;
+        if (/[0-9]/.test(pw)) score++;
+        if (/[^A-Za-z0-9]/.test(pw)) score++;
+        const levels = ['', 'weak', 'fair', 'good', 'strong'];
+        const labels = ['', 'Weak', 'Fair', 'Good', 'Strong 💪'];
+        const colors = ['', '#e74c3c', '#f39c12', '#2ecc71', '#1a3c1f'];
+        for (let i = 0; i < score; i++) bars[i].classList.add(levels[score]);
+        label.textContent = pw.length === 0 ? 'Enter a password' : labels[score];
+        label.style.color = colors[score];
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In — Agriconnect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+    <h1><a href="index.html">Agriconnect</a></h1>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="farmers.html">Farmers</a></li>
+            <li><a href="markets.html">Markets</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="signup.html" class="nav-cta">Sign Up Free</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="login-page">
+
+    <!-- LEFT: FORM -->
+    <div class="login-left">
+
+        <a href="index.html" class="back-link">← Back to Home</a>
+
+        <!-- LOGIN FORM -->
+        <div class="login-form-wrap" id="loginFormWrap">
+            <h2>Welcome <span>Back</span></h2><br>
+            <p>Don't have an account yet? <a href="signup.html">Create one free →</a></p><br>
+
+            <!-- SOCIAL LOGIN -->
+            <div class="social-login">
+                <button class="social-btn" onclick="socialLogin('Google')">🇬 Continue with Google</button>
+                <button class="social-btn" onclick="socialLogin('Facebook')">📘 Continue with Facebook</button>
+            </div>
+
+            <div class="divider"><span>or log in with your details</span></div>
+
+            <!-- ALERT -->
+            <div class="alert-box" id="alertBox"></div>
+
+            <!-- EMAIL -->
+            <div class="form-group">
+                <label for="email">Email Address or Phone</label>
+                <input type="text" id="email" placeholder="you@example.com or +233 XX XXX XXXX"
+                    oninput="clearAlert()" onkeydown="if(event.key==='Enter') attemptLogin()" />
+                <span class="error-msg" id="emailErr">Please enter your email or phone number.</span>
+            </div>
+
+            <!-- PASSWORD -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="password-wrap">
+                    <input type="password" id="password" placeholder="Enter your password"
+                        oninput="clearAlert()" onkeydown="if(event.key==='Enter') attemptLogin()" />
+                    <button class="toggle-pw" type="button" onclick="togglePw()">👁</button>
+                </div>
+                <span class="error-msg" id="pwErr">Please enter your password.</span>
+            </div>
+
+            <!-- REMEMBER + FORGOT -->
+            <div class="form-meta">
+                <div class="remember-row">
+                    <input type="checkbox" id="remember" checked />
+                    <label for="remember">Remember me</label>
+                </div>
+                <a href="#" class="forgot-link" onclick="showForgot(event)">Forgot password?</a>
+            </div>
+
+            <!-- SUBMIT -->
+            <button class="login-btn" id="loginBtn" onclick="attemptLogin()">Log In →</button>
+
+            <p style="text-align:center; font-size:0.8rem; color:var(--text-muted); margin-top:1.2rem;">
+                By logging in you agree to our <a href="terms.html" style="color:var(--green-mid);">Terms</a> and <a href="privacy.html" style="color:var(--green-mid);">Privacy Policy</a>.
+            </p>
+        </div>
+
+        <!-- FORGOT PASSWORD PANEL -->
+        <div class="forgot-panel" id="forgotPanel">
+            <button class="back-to-login" onclick="showLogin()">← Back to Login</button>
+
+            <div id="forgotForm">
+                <h3>Reset Password</h3>
+                <p>Enter the phone number or email linked to your account and we'll send you a reset link.</p>
+
+                <div class="alert-box" id="forgotAlert"></div>
+
+                <div class="form-group">
+                    <label for="resetContact">Email or Phone Number</label>
+                    <input type="text" id="resetContact" placeholder="you@example.com or +233 XX XXX XXXX"
+                        onkeydown="if(event.key==='Enter') sendReset()" />
+                    <span class="error-msg" id="resetErr">Please enter your email or phone number.</span>
+                </div>
+
+                <button class="login-btn" onclick="sendReset()">Send Reset Link →</button>
+            </div>
+
+            <div class="reset-success" id="resetSuccess">
+                <div class="reset-icon">📬</div>
+                <h4>Check Your Inbox!</h4>
+                <p>We've sent a password reset link to your email or an SMS to your phone. Follow the instructions to set a new password.</p>
+                <button class="login-btn" style="max-width:220px; margin:0 auto; display:block;" onclick="showLogin()">Back to Login</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- RIGHT: VISUAL PANEL -->
+    <div class="login-right">
+        <div class="right-content">
+            <div class="right-badge">🌾 Trusted by 2,400+ Farmers</div>
+
+            <h2>Your Farm.<br>Your <span>Market.</span><br>Your Terms.</h2>
+
+            <p>Log back in to manage your listings, check live prices, chat with buyers, and track your earnings — all in one place.</p>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p>"Agriconnect changed how I sell my maize. I log in every morning to check prices before I even leave the house."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">KA</div>
+                    <div>
+                        <div class="author-name">Kwame Asante</div>
+                        <div class="author-role">Maize Farmer, Ashanti Region</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-stats">
+                <div class="right-stat">
+                    <div class="num">2,400+</div>
+                    <div class="lbl">Active Farmers</div>
+                </div>
+                <div class="right-stat">
+                    <div class="num">850+</div>
+                    <div class="lbl">Verified Buyers</div>
+                </div>
+                <div class="right-stat">
+                    <div class="num">GH₵1M+</div>
+                    <div class="lbl">Trades Monthly</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Demo credentials hint
+    const DEMO_EMAIL = 'farmer@agriconnect.gh';
+    const DEMO_PASS  = 'Demo1234!';
+
+    function attemptLogin() {
+        const email = document.getElementById('email').value.trim();
+        const pass  = document.getElementById('password').value;
+        let valid = true;
+
+        // Clear errors
+        document.getElementById('emailErr').classList.remove('show');
+        document.getElementById('pwErr').classList.remove('show');
+        document.getElementById('email').classList.remove('error');
+        document.getElementById('password').classList.remove('error');
+
+        if (!email) {
+            document.getElementById('emailErr').classList.add('show');
+            document.getElementById('email').classList.add('error');
+            valid = false;
+        }
+
+        if (!pass) {
+            document.getElementById('pwErr').classList.add('show');
+            document.getElementById('password').classList.add('error');
+            valid = false;
+        }
+
+        if (!valid) return;
+
+        // Show loading state
+        const btn = document.getElementById('loginBtn');
+        btn.classList.add('loading');
+        btn.innerHTML = '<span class="spinner"></span> Logging in...';
+
+        setTimeout(() => {
+            btn.classList.remove('loading');
+            btn.innerHTML = 'Log In →';
+
+            // Demo: accept demo credentials OR any non-empty input for demo
+            if (email && pass.length >= 6) {
+                showAlert('success', '✅ Login successful! Redirecting to your dashboard...');
+                setTimeout(() => {
+                    // In production this would redirect to dashboard
+                    window.location.href = 'index.html';
+                }, 1800);
+            } else {
+                showAlert('error', '❌ Incorrect email or password. Try: <strong>' + DEMO_EMAIL + '</strong> / <strong>' + DEMO_PASS + '</strong>');
+                document.getElementById('email').classList.add('error');
+                document.getElementById('password').classList.add('error');
+            }
+        }, 1400);
+    }
+
+    function showAlert(type, msg) {
+        const box = document.getElementById('alertBox');
+        box.className = 'alert-box ' + type + ' show';
+        box.innerHTML = msg;
+    }
+
+    function clearAlert() {
+        const box = document.getElementById('alertBox');
+        box.classList.remove('show');
+        document.getElementById('email').classList.remove('error');
+        document.getElementById('password').classList.remove('error');
+        document.getElementById('emailErr').classList.remove('show');
+        document.getElementById('pwErr').classList.remove('show');
+    }
+
+    function togglePw() {
+        const input = document.getElementById('password');
+        const btn = document.querySelector('.toggle-pw');
+        if (input.type === 'password') { input.type = 'text'; btn.textContent = '🙈'; }
+        else { input.type = 'password'; btn.textContent = '👁'; }
+    }
+
+    function showForgot(e) {
+        e.preventDefault();
+        document.getElementById('loginFormWrap').classList.add('hidden');
+        document.getElementById('forgotPanel').classList.add('show');
+        document.getElementById('resetContact').focus();
+    }
+
+    function showLogin() {
+        document.getElementById('forgotPanel').classList.remove('show');
+        document.getElementById('loginFormWrap').classList.remove('hidden');
+        document.getElementById('forgotForm').style.display = 'block';
+        document.getElementById('resetSuccess').classList.remove('show');
+        document.getElementById('resetContact').value = '';
+        document.getElementById('resetErr').classList.remove('show');
+        document.getElementById('forgotAlert').classList.remove('show');
+    }
+
+    function sendReset() {
+        const contact = document.getElementById('resetContact').value.trim();
+        document.getElementById('resetErr').classList.remove('show');
+
+        if (!contact) {
+            document.getElementById('resetErr').classList.add('show');
+            return;
+        }
+
+        const btn = document.querySelector('#forgotPanel .login-btn');
+        btn.classList.add('loading');
+        btn.innerHTML = '<span class="spinner"></span> Sending...';
+
+        setTimeout(() => {
+            btn.classList.remove('loading');
+            btn.innerHTML = 'Send Reset Link →';
+            document.getElementById('forgotForm').style.display = 'none';
+            document.getElementById('resetSuccess').classList.add('show');
+        }, 1400);
+    }
+
+    function socialLogin(provider) {
+        const btn = document.getElementById('loginBtn');
+        showAlert('success', '🔄 Connecting to ' + provider + '... (Demo mode)');
+        setTimeout(() => {
+            showAlert('success', '✅ ' + provider + ' login successful! Redirecting...');
+            setTimeout(() => { window.location.href = 'index.html'; }, 1500);
+        }, 1200);
+    }
+</script>
+
+</body>
+</html>
