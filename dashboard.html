@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard — Agriconnect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
+    <style>
+        .dashboard-page{max-width:1100px;margin:2rem auto;padding:0 5%;}
+        .dash-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;}
+        .dash-header h2{font-family:'Playfair Display',serif;color:var(--green-dark);font-size:2rem;}
+        .dash-header h2 span{color:var(--gold);}
+        .user-badge{display:inline-flex;align-items:center;gap:0.6rem;}
+        .user-avatar{width:40px;height:40px;border-radius:50%;background:var(--green-dark);color:var(--cream);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;}
+        .user-role{padding:0.25rem 0.8rem;border-radius:20px;font-size:0.8rem;font-weight:500;background:#d1ecf1;color:#0c5460;}
+        .dash-tabs{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:2rem;border-bottom:2px solid #eee;padding-bottom:0;}
+        .dash-tab{padding:0.7rem 1.4rem;border:none;background:transparent;color:var(--text-muted);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.95rem;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all 0.2s;}
+        .dash-tab.active{color:var(--green-mid);border-bottom-color:var(--green-mid);font-weight:500;}
+        .dash-tab:hover{color:var(--green-dark);}
+        .dash-panel{display:none;}
+        .dash-panel.active{display:block;animation:fadeUp 0.3s ease;}
+        .dash-card{background:#fff;border-radius:14px;padding:1.8rem;box-shadow:0 2px 16px rgba(0,0,0,0.06);margin-bottom:1.2rem;}
+        .dash-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem;flex-wrap:wrap;gap:0.5rem;}
+        .dash-card h3{font-family:'Playfair Display',serif;color:var(--green-dark);font-size:1.15rem;margin:0;}
+        .dash-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:2rem;}
+        .stat-card{background:#fff;border-radius:14px;padding:1.5rem;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,0.06);border-left:4px solid var(--green-mid);}
+        .stat-card .num{font-family:'Playfair Display',serif;font-size:2rem;color:var(--green-dark);font-weight:700;}
+        .stat-card .lbl{color:var(--text-muted);font-size:0.85rem;margin-top:0.3rem;}
+        .item-list{list-style:none;padding:0;margin:0;}
+        .item-list li{padding:1rem;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;border-radius:8px;transition:background 0.15s;}
+        .item-list li:hover{background:#f9f9f6;}
+        .item-list li:last-child{border-bottom:none;}
+        .item-name{font-weight:600;color:var(--green-dark);font-size:0.95rem;}
+        .item-detail{color:var(--text-muted);font-size:0.85rem;margin-top:0.2rem;}
+        .badge-status{padding:0.25rem 0.7rem;border-radius:20px;font-size:0.75rem;font-weight:600;text-transform:capitalize;}
+        .badge-pending{background:#fff3cd;color:#856404;}
+        .badge-accepted{background:#d1ecf1;color:#0c5460;}
+        .badge-completed{background:#d4edda;color:#155724;}
+        .badge-rejected,.badge-cancelled{background:#f8d7da;color:#721c24;}
+        .action-btn{padding:0.4rem 0.9rem;border-radius:8px;border:none;cursor:pointer;font-size:0.8rem;font-family:'DM Sans',sans-serif;font-weight:500;transition:all 0.2s;}
+        .action-btn:hover{opacity:0.85;transform:translateY(-1px);}
+        .action-btn-accept{background:var(--green-mid);color:#fff;}
+        .action-btn-reject{background:#dc3545;color:#fff;}
+        .action-btn-cancel{background:#6c757d;color:#fff;}
+        .action-btn-complete{background:var(--gold);color:var(--green-dark);}
+        .action-btn-primary{background:var(--green-mid);color:#fff;}
+        .empty-state{text-align:center;padding:3rem;color:var(--text-muted);}
+        .empty-state h4{font-family:'Playfair Display',serif;color:var(--green-dark);margin-bottom:0.5rem;font-size:1.1rem;}
+        /* Profile form */
+        .profile-form{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+        .profile-form .form-group{display:flex;flex-direction:column;}
+        .profile-form label{font-size:0.85rem;color:var(--text-muted);margin-bottom:0.3rem;font-weight:500;}
+        .profile-form input,.profile-form textarea{padding:0.7rem;border:1px solid #ddd;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.9rem;transition:border 0.2s;}
+        .profile-form input:focus,.profile-form textarea:focus{border-color:var(--green-mid);outline:none;}
+        .profile-form .full-width{grid-column:1/-1;}
+        /* Toast */
+        .toast{position:fixed;bottom:2rem;right:2rem;background:var(--green-dark);color:#fff;padding:0.9rem 1.5rem;border-radius:10px;font-size:0.9rem;z-index:2000;transform:translateY(100px);opacity:0;transition:all 0.3s ease;font-family:'DM Sans',sans-serif;box-shadow:0 4px 20px rgba(0,0,0,0.2);}
+        .toast.show{transform:translateY(0);opacity:1;}
+        .toast.error{background:#dc3545;}
+        /* Modal */
+        .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;justify-content:center;align-items:center;padding:2rem;}
+        .modal-overlay.show{display:flex;}
+        .modal-card{background:#fff;border-radius:16px;max-width:520px;width:100%;max-height:80vh;overflow-y:auto;padding:2.2rem;position:relative;animation:fadeUp 0.3s ease;}
+        .modal-close{position:absolute;top:1rem;right:1.2rem;background:none;border:none;font-size:1.6rem;cursor:pointer;color:var(--text-muted);line-height:1;}
+        .modal-close:hover{color:var(--green-dark);}
+        .modal-card h3{font-family:'Playfair Display',serif;color:var(--green-dark);font-size:1.3rem;margin-bottom:1.2rem;}
+        .modal-card .form-group{margin-bottom:1rem;}
+        .modal-card label{display:block;font-size:0.85rem;color:var(--text-muted);margin-bottom:0.3rem;font-weight:500;}
+        .modal-card input,.modal-card select,.modal-card textarea{width:100%;padding:0.7rem;border:1px solid #ddd;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.9rem;box-sizing:border-box;}
+        .modal-card input:focus,.modal-card select:focus,.modal-card textarea:focus{border-color:var(--green-mid);outline:none;}
+        .modal-card .form-row{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;}
+        .modal-submit{width:100%;padding:0.8rem;background:var(--green-mid);color:#fff;border:none;border-radius:10px;font-size:0.95rem;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500;margin-top:0.5rem;transition:background 0.2s;}
+        .modal-submit:hover{background:var(--green-dark);}
+        .modal-submit:disabled{opacity:0.6;cursor:not-allowed;}
+        /* Image upload */
+        .file-upload-area{border:2px dashed #ddd;border-radius:12px;padding:1rem;transition:border-color 0.2s;}
+        .file-upload-area.dragover{border-color:var(--green-mid);background:rgba(76,175,80,0.04);}
+        .file-upload-placeholder{text-align:center;padding:1.5rem;cursor:pointer;color:var(--text-muted);}
+        .file-upload-placeholder:hover{color:var(--green-mid);}
+        .file-upload-placeholder p{margin:0.3rem 0;}
+        .image-preview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:0.6rem;}
+        .image-preview-item{position:relative;border-radius:10px;overflow:hidden;aspect-ratio:1;background:#f5f5f5;}
+        .image-preview-item img{width:100%;height:100%;object-fit:cover;}
+        .image-preview-item .remove-img{position:absolute;top:4px;right:4px;width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,0.6);color:#fff;border:none;cursor:pointer;font-size:14px;line-height:24px;text-align:center;transition:background 0.2s;}
+        .image-preview-item .remove-img:hover{background:#dc3545;}
+        /* Harvest card images */
+        .harvest-images{display:flex;gap:0.4rem;margin-top:0.5rem;}
+        .harvest-images .h-thumb{width:48px;height:48px;border-radius:8px;object-fit:cover;border:2px solid #eee;}
+        .harvest-images .h-thumb-more{width:48px;height:48px;border-radius:8px;background:#eee;display:flex;align-items:center;justify-content:center;font-size:0.75rem;color:var(--text-muted);}
+        .upload-img-btn{font-size:0.78rem;color:var(--green-mid);cursor:pointer;border:none;background:none;text-decoration:underline;padding:0;margin-top:0.3rem;}
+        .upload-img-btn:hover{color:var(--green-dark);}
+        @media(max-width:768px){
+            .profile-form{grid-template-columns:1fr;}
+            .dash-header{flex-direction:column;align-items:flex-start;}
+            .modal-card .form-row{grid-template-columns:1fr;}
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+    <h1><a href="index.html">Agriconnect</a></h1>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="farmers.html">Farmers</a></li>
+            <li><a href="markets.html">Markets</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="dashboard-page">
+    <div class="dash-header">
+        <h2>Welcome, <span id="userName">User</span></h2>
+        <div class="user-badge">
+            <div class="user-avatar" id="userAvatar">U</div>
+            <span class="user-role" id="userRole"></span>
+        </div>
+    </div>
+
+    <div class="dash-stats" id="dashStats"></div>
+
+    <div class="dash-tabs" id="dashTabs"></div>
+
+    <!-- ORDERS PANEL -->
+    <div class="dash-panel" id="panel-orders">
+        <div class="dash-card">
+            <div class="dash-card-header"><h3>Your Orders</h3></div>
+            <ul class="item-list" id="ordersList">
+                <li class="empty-state"><div class="spinner" style="margin:0 auto 1rem;"></div><p>Loading orders...</p></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- HARVESTS PANEL (Farmer only) -->
+    <div class="dash-panel" id="panel-harvests">
+        <div class="dash-card">
+            <div class="dash-card-header">
+                <h3>My Harvest Listings</h3>
+                <button class="action-btn action-btn-primary" onclick="openNewHarvestModal()">+ New Listing</button>
+            </div>
+            <ul class="item-list" id="harvestsList">
+                <li class="empty-state"><div class="spinner" style="margin:0 auto 1rem;"></div><p>Loading listings...</p></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- PROFILE PANEL -->
+    <div class="dash-panel" id="panel-profile">
+        <div class="dash-card">
+            <h3 style="margin-bottom:1.2rem;">Edit Profile</h3>
+            <div class="profile-form" id="profileForm">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="profName" placeholder="Your full name" />
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" id="profPhone" placeholder="+233 XX XXX XXXX" />
+                </div>
+                <div class="form-group">
+                    <label>Location / Region</label>
+                    <input type="text" id="profLocation" placeholder="e.g. Ashanti Region" />
+                </div>
+                <div class="form-group">
+                    <label id="profBizLabel">Farm Name</label>
+                    <input type="text" id="profBizName" placeholder="e.g. Asante Family Farm" />
+                </div>
+                <div class="form-group full-width">
+                    <label>Bio</label>
+                    <textarea id="profBio" rows="3" placeholder="Tell buyers about yourself..."></textarea>
+                </div>
+                <div class="full-width" style="margin-top:0.5rem;">
+                    <button class="action-btn action-btn-primary" style="padding:0.7rem 2rem;font-size:0.95rem;" onclick="saveProfile()">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ORDER HISTORY PANEL -->
+    <div class="dash-panel" id="panel-history">
+        <div class="dash-card">
+            <div class="dash-card-header"><h3>Order History</h3></div>
+            <ul class="item-list" id="historyList">
+                <li class="empty-state"><div class="spinner" style="margin:0 auto 1rem;"></div><p>Loading history...</p></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- NEW HARVEST MODAL -->
+<div class="modal-overlay" id="harvestModal" onclick="if(event.target===this)closeHarvestModal()">
+    <div class="modal-card">
+        <button class="modal-close" onclick="closeHarvestModal()">&times;</button>
+        <h3>Create New Listing</h3>
+        <div class="form-group">
+            <label>Harvest Name</label>
+            <input type="text" id="hName" placeholder='e.g. White Maize - Grade A' />
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Category</label>
+                <select id="hCategory">
+                    <option value="">Select category</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Unit</label>
+                <input type="text" id="hUnit" placeholder='e.g. kg, bag, crate' />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Quantity</label>
+                <input type="number" id="hQuantity" min="1" placeholder="e.g. 500" />
+            </div>
+            <div class="form-group">
+                <label>Price per Unit (GH₵)</label>
+                <input type="number" id="hPrice" min="0.01" step="0.01" placeholder="e.g. 320" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Description (optional)</label>
+            <textarea id="hDesc" rows="2" placeholder="Describe your produce..."></textarea>
+        </div>
+        <div class="form-group">
+            <label>Location (optional)</label>
+            <input type="text" id="hLocation" placeholder="e.g. Ashanti Region" />
+        </div>
+        <div class="form-group">
+            <label>Photos (up to 5 images)</label>
+            <div class="file-upload-area" id="fileDropArea">
+                <input type="file" id="hImages" multiple accept="image/jpeg,image/png,image/webp" onchange="previewImages(this)" style="display:none;" />
+                <div class="file-upload-placeholder" id="uploadPlaceholder" onclick="document.getElementById('hImages').click()">
+                    <span style="font-size:2rem;">📷</span>
+                    <p>Click to select images or drag & drop</p>
+                    <p style="font-size:0.8rem;color:var(--text-muted);">JPG, PNG, WEBP — max 5MB each</p>
+                </div>
+                <div class="image-preview-grid" id="imagePreviewGrid"></div>
+            </div>
+        </div>
+        <button class="modal-submit" id="harvestSubmitBtn" onclick="submitNewHarvest()">Create Listing</button>
+    </div>
+</div>
+
+<!-- UPLOAD IMAGES TO EXISTING LISTING MODAL -->
+<div class="modal-overlay" id="uploadModal" onclick="if(event.target===this)closeUploadModal()">
+    <div class="modal-card">
+        <button class="modal-close" onclick="closeUploadModal()">&times;</button>
+        <h3>Upload Photos</h3>
+        <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1rem;" id="uploadModalSubtitle">Add photos to your listing</p>
+        <div class="form-group">
+            <div class="file-upload-area" id="uploadDropArea">
+                <input type="file" id="uploadImages" multiple accept="image/jpeg,image/png,image/webp" onchange="previewUploadImages(this)" style="display:none;" />
+                <div class="file-upload-placeholder" onclick="document.getElementById('uploadImages').click()">
+                    <span style="font-size:2rem;">📷</span>
+                    <p>Click to select images</p>
+                    <p style="font-size:0.8rem;color:var(--text-muted);">JPG, PNG, WEBP — max 5MB each, up to 5 images</p>
+                </div>
+                <div class="image-preview-grid" id="uploadPreviewGrid"></div>
+            </div>
+        </div>
+        <button class="modal-submit" id="uploadSubmitBtn" onclick="submitUploadImages()">Upload Photos</button>
+    </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand"><h3>Agriconnect</h3><p>Empowering farmers across Africa.</p></div>
+        <div class="footer-links"><h4>Platform</h4><ul><li><a href="farmers.html">For Farmers</a></li><li><a href="markets.html">Browse Markets</a></li></ul></div>
+        <div class="footer-links"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2026 Agriconnect. All rights reserved.</p></div>
+</footer>
+
+<script>
+    // Guard
+    if (!Auth.requireAuth()) throw new Error('Not authenticated');
+    const user = Auth.getUser();
+    const isFarmer = user && user.type === 'farmer';
+
+    // Header
+    const firstName = user ? user.full_name.split(' ')[0] : 'User';
+    const initials = user ? user.full_name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2) : 'U';
+    document.getElementById('userName').textContent = firstName;
+    document.getElementById('userAvatar').textContent = initials;
+    document.getElementById('userRole').textContent = user ? (user.type === 'wholesaler' ? 'Buyer' : 'Farmer') : '';
+    if (isFarmer) document.getElementById('profBizLabel').textContent = 'Farm Name';
+    else document.getElementById('profBizLabel').textContent = 'Business Name';
+
+    // Toast
+    function showToast(msg, type = '') {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.className = 'toast show ' + type;
+        setTimeout(() => t.classList.remove('show'), 3500);
+    }
+
+    // ─── Tabs ───────────────────────────────────
+    const tabs = [];
+    if (isFarmer) tabs.push({ id: 'harvests', label: 'My Listings' });
+    tabs.push({ id: 'orders', label: 'Orders' });
+    tabs.push({ id: 'history', label: 'History' });
+    tabs.push({ id: 'profile', label: 'Profile' });
+
+    const tabsEl = document.getElementById('dashTabs');
+    tabs.forEach((t, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'dash-tab' + (i === 0 ? ' active' : '');
+        btn.textContent = t.label;
+        btn.onclick = () => switchTab(t.id, btn);
+        tabsEl.appendChild(btn);
+    });
+    document.getElementById('panel-' + tabs[0].id).classList.add('active');
+
+    function switchTab(id, btn) {
+        document.querySelectorAll('.dash-panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.dash-tab').forEach(t => t.classList.remove('active'));
+        document.getElementById('panel-' + id).classList.add('active');
+        btn.classList.add('active');
+    }
+
+    // ─── Orders ─────────────────────────────────
+    async function loadOrders() {
+        const list = document.getElementById('ordersList');
+        try {
+            const orders = await API.getOrders();
+            if (!orders || orders.length === 0) {
+                list.innerHTML = '<li class="empty-state"><h4>No active orders</h4><p>Orders will appear here when you place or receive them.</p></li>';
+                return;
+            }
+            list.innerHTML = '';
+            orders.forEach(o => {
+                const harvest = o.harvest || {};
+                const buyer = o.user_order_buyer_idTouser || {};
+                const price = Number(o.total_price).toLocaleString();
+                const li = document.createElement('li');
+                li.innerHTML =
+                    '<div><span class="item-name">' + (harvest.name || 'Order #' + o.id) + '</span>' +
+                    '<div class="item-detail">Qty: ' + o.quantity + ' &middot; GH₵ ' + price +
+                    (isFarmer && buyer.full_name ? ' &middot; Buyer: ' + buyer.full_name : '') + '</div></div>' +
+                    '<div style="display:flex;gap:0.4rem;align-items:center;flex-wrap:wrap;">' +
+                    '<span class="badge-status badge-' + o.status + '">' + o.status + '</span>' +
+                    getOrderActions(o) + '</div>';
+                list.appendChild(li);
+            });
+        } catch (err) {
+            list.innerHTML = '<li class="empty-state"><h4>Could not load orders</h4><p>' + (err.message || '') + '</p></li>';
+        }
+    }
+
+    function getOrderActions(o) {
+        let h = '';
+        if (isFarmer && o.status === 'pending') {
+            h += '<button class="action-btn action-btn-accept" onclick="orderAction(' + o.id + ',\'accept\')">Accept</button>';
+            h += '<button class="action-btn action-btn-reject" onclick="orderAction(' + o.id + ',\'reject\')">Reject</button>';
+        }
+        if (isFarmer && o.status === 'accepted')
+            h += '<button class="action-btn action-btn-complete" onclick="orderAction(' + o.id + ',\'complete\')">Complete</button>';
+        if (!isFarmer && o.status === 'pending')
+            h += '<button class="action-btn action-btn-cancel" onclick="orderAction(' + o.id + ',\'cancel\')">Cancel</button>';
+        return h;
+    }
+
+    async function orderAction(id, action) {
+        try {
+            if (action === 'accept') await API.acceptOrder(id);
+            else if (action === 'reject') await API.rejectOrder(id);
+            else if (action === 'complete') await API.completeOrder(id);
+            else if (action === 'cancel') await API.cancelOrder(id);
+            showToast('Order ' + action + 'ed successfully');
+            loadOrders();
+            loadStats();
+        } catch (err) { showToast(err.message || 'Action failed', 'error'); }
+    }
+
+    // ─── Harvests ───────────────────────────────
+    async function loadHarvests() {
+        if (!isFarmer) return;
+        const list = document.getElementById('harvestsList');
+        try {
+            const harvests = await API.getMyHarvests();
+            if (!harvests || harvests.length === 0) {
+                list.innerHTML = '<li class="empty-state"><h4>No listings yet</h4><p>Create your first harvest listing to start selling.</p></li>';
+                return;
+            }
+            list.innerHTML = '';
+            harvests.forEach(h => {
+                const price = Number(h.unit_price).toLocaleString();
+                const images = h.harvest_image || [];
+                let imgHtml = '';
+                if (images.length > 0) {
+                    imgHtml = '<div class="harvest-images">';
+                    images.slice(0, 3).forEach(img => {
+                        imgHtml += '<img class="h-thumb" src="' + CONFIG.API_BASE_URL + img.img_url + '" alt="' + h.name + '" />';
+                    });
+                    if (images.length > 3) imgHtml += '<div class="h-thumb-more">+' + (images.length - 3) + '</div>';
+                    imgHtml += '</div>';
+                }
+                const li = document.createElement('li');
+                li.style.flexDirection = 'column';
+                li.style.alignItems = 'stretch';
+                li.innerHTML =
+                    '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;">' +
+                        '<div><span class="item-name">' + h.name + '</span>' +
+                        '<div class="item-detail">' + h.quantity + ' ' + h.unit + ' &middot; GH₵ ' + price + '/' + h.unit + ' &middot; ' + h.category + '</div></div>' +
+                        '<div style="display:flex;gap:0.4rem;align-items:center;">' +
+                        '<span class="badge-status ' + (h.is_available ? 'badge-accepted' : 'badge-rejected') + '">' + (h.is_available ? 'Available' : 'Sold Out') + '</span>' +
+                        '<button class="action-btn action-btn-reject" onclick="deleteHarvest(' + h.id + ')">Delete</button></div>' +
+                    '</div>' +
+                    imgHtml +
+                    '<button class="upload-img-btn" onclick="openUploadModal(' + h.id + ',\'' + h.name.replace(/'/g, "\\'") + '\')">' +
+                        (images.length > 0 ? '📷 Manage Photos (' + images.length + ')' : '📷 Add Photos') +
+                    '</button>';
+                list.appendChild(li);
+            });
+        } catch (err) {
+            list.innerHTML = '<li class="empty-state"><h4>Could not load listings</h4><p>' + (err.message || '') + '</p></li>';
+        }
+    }
+
+    async function deleteHarvest(id) {
+        if (!confirm('Delete this listing? This cannot be undone.')) return;
+        try {
+            await API.deleteHarvest(id);
+            showToast('Listing deleted');
+            loadHarvests();
+            loadStats();
+        } catch (err) { showToast(err.message || 'Could not delete', 'error'); }
+    }
+
+    // ─── New Harvest Modal ──────────────────────
+    function openNewHarvestModal() {
+        document.getElementById('harvestModal').classList.add('show');
+        loadCategoriesForModal();
+    }
+    function closeHarvestModal() {
+        document.getElementById('harvestModal').classList.remove('show');
+        ['hName','hUnit','hQuantity','hPrice','hDesc','hLocation'].forEach(id => document.getElementById(id).value = '');
+        document.getElementById('hImages').value = '';
+        document.getElementById('imagePreviewGrid').innerHTML = '';
+        document.getElementById('uploadPlaceholder').style.display = '';
+    }
+
+    async function loadCategoriesForModal() {
+        const select = document.getElementById('hCategory');
+        if (select.options.length > 1) return;
+        try {
+            const cats = await API.getCategories();
+            cats.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c.category;
+                opt.textContent = c.category;
+                select.appendChild(opt);
+            });
+        } catch (e) {}
+    }
+
+    async function submitNewHarvest() {
+        const name = document.getElementById('hName').value.trim();
+        const category = document.getElementById('hCategory').value;
+        const unit = document.getElementById('hUnit').value.trim();
+        const quantity = parseInt(document.getElementById('hQuantity').value);
+        const unit_price = parseFloat(document.getElementById('hPrice').value);
+        const description = document.getElementById('hDesc').value.trim();
+        const location = document.getElementById('hLocation').value.trim();
+
+        if (!name || !category || !unit || !quantity || !unit_price) {
+            showToast('Please fill in all required fields', 'error');
+            return;
+        }
+
+        const btn = document.getElementById('harvestSubmitBtn');
+        btn.disabled = true;
+        btn.textContent = 'Creating...';
+
+        try {
+            const data = { name, category, quantity, unit, unit_price };
+            if (description) data.description = description;
+            if (location) data.location = location;
+            const result = await API.createHarvest(data);
+
+            // Upload images if any were selected
+            const fileInput = document.getElementById('hImages');
+            if (fileInput.files.length > 0 && result.harvest) {
+                btn.textContent = 'Uploading photos...';
+                try {
+                    await API.uploadHarvestImages(result.harvest.id, fileInput.files);
+                } catch (imgErr) {
+                    showToast('Listing created but photo upload failed: ' + (imgErr.message || ''), 'error');
+                }
+            }
+
+            showToast('Listing created successfully!');
+            closeHarvestModal();
+            loadHarvests();
+            loadStats();
+        } catch (err) {
+            showToast(err.message || 'Failed to create listing', 'error');
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'Create Listing';
+        }
+    }
+
+    // ─── History ────────────────────────────────
+    async function loadHistory() {
+        const list = document.getElementById('historyList');
+        try {
+            const orders = await API.getOrderHistory();
+            if (!orders || orders.length === 0) {
+                list.innerHTML = '<li class="empty-state"><h4>No order history</h4><p>Completed, cancelled, and rejected orders will appear here.</p></li>';
+                return;
+            }
+            list.innerHTML = '';
+            orders.forEach(o => {
+                const harvest = o.harvest || {};
+                const price = Number(o.total_price).toLocaleString();
+                const li = document.createElement('li');
+                li.innerHTML =
+                    '<div><span class="item-name">' + (harvest.name || 'Order #' + o.id) + '</span>' +
+                    '<div class="item-detail">Qty: ' + o.quantity + ' &middot; GH₵ ' + price + '</div></div>' +
+                    '<span class="badge-status badge-' + o.status + '">' + o.status + '</span>';
+                list.appendChild(li);
+            });
+        } catch (err) {
+            list.innerHTML = '<li class="empty-state"><h4>Could not load history</h4><p>' + (err.message || '') + '</p></li>';
+        }
+    }
+
+    // ─── Profile ────────────────────────────────
+    async function loadProfile() {
+        try {
+            const p = await API.getProfile();
+            document.getElementById('profName').value = p.full_name || '';
+            document.getElementById('profPhone').value = p.phone || '';
+            document.getElementById('profLocation').value = p.location || '';
+            document.getElementById('profBizName').value = p.farm_name || p.business_name || '';
+            document.getElementById('profBio').value = p.bio || '';
+        } catch (e) {}
+    }
+
+    async function saveProfile() {
+        const data = {
+            full_name: document.getElementById('profName').value.trim(),
+            phone: document.getElementById('profPhone').value.trim(),
+            location: document.getElementById('profLocation').value.trim(),
+            bio: document.getElementById('profBio').value.trim(),
+        };
+        const bizName = document.getElementById('profBizName').value.trim();
+        if (isFarmer) data.farm_name = bizName; else data.business_name = bizName;
+
+        try {
+            await API.updateProfile(data);
+            const updatedUser = { ...user, full_name: data.full_name };
+            localStorage.setItem(Auth.USER_KEY, JSON.stringify(updatedUser));
+            showToast('Profile saved!');
+        } catch (err) { showToast(err.message || 'Failed to save', 'error'); }
+    }
+
+    // ─── Stats ──────────────────────────────────
+    async function loadStats() {
+        const el = document.getElementById('dashStats');
+        try {
+            const [orders, history] = await Promise.all([API.getOrders(), API.getOrderHistory()]);
+            const active = orders ? orders.length : 0;
+            const completed = history ? history.filter(o => o.status === 'completed').length : 0;
+            let html =
+                '<div class="stat-card"><div class="num">' + active + '</div><div class="lbl">Active Orders</div></div>' +
+                '<div class="stat-card"><div class="num">' + completed + '</div><div class="lbl">Completed</div></div>';
+            if (isFarmer) {
+                try {
+                    const h = await API.getMyHarvests();
+                    html += '<div class="stat-card"><div class="num">' + (h ? h.length : 0) + '</div><div class="lbl">My Listings</div></div>';
+                } catch (e) {}
+            }
+            el.innerHTML = html;
+        } catch (err) { el.innerHTML = ''; }
+    }
+
+    // ─── Image Preview (New Harvest Modal) ────────
+    function previewImages(input) {
+        const grid = document.getElementById('imagePreviewGrid');
+        const placeholder = document.getElementById('uploadPlaceholder');
+        grid.innerHTML = '';
+        if (input.files.length > 0) placeholder.style.display = 'none';
+        else { placeholder.style.display = ''; return; }
+
+        Array.from(input.files).slice(0, 5).forEach((file, i) => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const div = document.createElement('div');
+                div.className = 'image-preview-item';
+                div.innerHTML = '<img src="' + e.target.result + '" alt="Preview" />' +
+                    '<button class="remove-img" onclick="removePreviewImage(' + i + ')">&times;</button>';
+                grid.appendChild(div);
+            };
+            reader.readAsDataURL(file);
+        });
+
+        if (input.files.length > 5) showToast('Only the first 5 images will be uploaded', 'error');
+    }
+
+    function removePreviewImage(index) {
+        // Can't modify FileList directly — reset and re-show placeholder
+        const input = document.getElementById('hImages');
+        const dt = new DataTransfer();
+        Array.from(input.files).forEach((f, i) => { if (i !== index) dt.items.add(f); });
+        input.files = dt.files;
+        previewImages(input);
+    }
+
+    // Drag & drop for new harvest modal
+    const dropArea = document.getElementById('fileDropArea');
+    if (dropArea) {
+        ['dragenter','dragover'].forEach(e => dropArea.addEventListener(e, (ev) => { ev.preventDefault(); dropArea.classList.add('dragover'); }));
+        ['dragleave','drop'].forEach(e => dropArea.addEventListener(e, (ev) => { ev.preventDefault(); dropArea.classList.remove('dragover'); }));
+        dropArea.addEventListener('drop', (ev) => {
+            const input = document.getElementById('hImages');
+            input.files = ev.dataTransfer.files;
+            previewImages(input);
+        });
+    }
+
+    // ─── Upload Modal (Existing Listings) ───────
+    let uploadTargetId = null;
+
+    function openUploadModal(harvestId, harvestName) {
+        uploadTargetId = harvestId;
+        document.getElementById('uploadModalSubtitle').textContent = 'Add photos to "' + harvestName + '"';
+        document.getElementById('uploadImages').value = '';
+        document.getElementById('uploadPreviewGrid').innerHTML = '';
+        document.getElementById('uploadModal').classList.add('show');
+    }
+
+    function closeUploadModal() {
+        document.getElementById('uploadModal').classList.remove('show');
+        uploadTargetId = null;
+    }
+
+    function previewUploadImages(input) {
+        const grid = document.getElementById('uploadPreviewGrid');
+        grid.innerHTML = '';
+        Array.from(input.files).slice(0, 5).forEach((file) => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const div = document.createElement('div');
+                div.className = 'image-preview-item';
+                div.innerHTML = '<img src="' + e.target.result + '" alt="Preview" />';
+                grid.appendChild(div);
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    async function submitUploadImages() {
+        if (!uploadTargetId) return;
+        const input = document.getElementById('uploadImages');
+        if (!input.files.length) { showToast('Please select at least one image', 'error'); return; }
+
+        const btn = document.getElementById('uploadSubmitBtn');
+        btn.disabled = true;
+        btn.textContent = 'Uploading...';
+
+        try {
+            await API.uploadHarvestImages(uploadTargetId, input.files);
+            showToast('Photos uploaded successfully!');
+            closeUploadModal();
+            loadHarvests();
+        } catch (err) {
+            showToast(err.message || 'Upload failed', 'error');
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'Upload Photos';
+        }
+    }
+
+    // Drag & drop for upload modal
+    const uploadDrop = document.getElementById('uploadDropArea');
+    if (uploadDrop) {
+        ['dragenter','dragover'].forEach(e => uploadDrop.addEventListener(e, (ev) => { ev.preventDefault(); uploadDrop.classList.add('dragover'); }));
+        ['dragleave','drop'].forEach(e => uploadDrop.addEventListener(e, (ev) => { ev.preventDefault(); uploadDrop.classList.remove('dragover'); }));
+        uploadDrop.addEventListener('drop', (ev) => {
+            const input = document.getElementById('uploadImages');
+            input.files = ev.dataTransfer.files;
+            previewUploadImages(input);
+        });
+    }
+
+    // ─── Init ───────────────────────────────────
+    loadOrders();
+    loadHistory();
+    loadProfile();
+    loadStats();
+    if (isFarmer) loadHarvests();
+</script>
+</body>
+</html>
