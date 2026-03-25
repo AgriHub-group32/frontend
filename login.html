@@ -6,6 +6,8 @@
     <title>Log In — Agriconnect</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="icon" type="image/png" href="favicon.png">
     <script src="js/config.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/api.js"></script>
@@ -41,8 +43,8 @@
 
             <!-- SOCIAL LOGIN -->
             <div class="social-login">
-                <button class="social-btn" disabled style="opacity:0.5;cursor:not-allowed;">🇬 Continue with Google (Coming Soon)</button>
-                <button class="social-btn" disabled style="opacity:0.5;cursor:not-allowed;">📘 Continue with Facebook (Coming Soon)</button>
+                <button class="social-btn" disabled style="opacity:0.5;cursor:not-allowed;"><i class="fa-brands fa-google"></i> Continue with Google (Coming Soon)</button>
+                <button class="social-btn" disabled style="opacity:0.5;cursor:not-allowed;"><i class="fa-brands fa-facebook-f"></i> Continue with Facebook (Coming Soon)</button>
             </div>
 
             <div class="divider"><span>log in with your email below</span></div>
@@ -64,7 +66,7 @@
                 <div class="password-wrap">
                     <input type="password" id="password" placeholder="Enter your password"
                         oninput="clearAlert()" onkeydown="if(event.key==='Enter') attemptLogin()" />
-                    <button class="toggle-pw" type="button" onclick="togglePw()">👁</button>
+                    <button class="toggle-pw" type="button" onclick="togglePw()"><i class="fa-solid fa-eye"></i></button>
                 </div>
                 <span class="error-msg" id="pwErr">Please enter your password.</span>
             </div>
@@ -107,7 +109,7 @@
             </div>
 
             <div class="reset-success" id="resetSuccess">
-                <div class="reset-icon">📬</div>
+                <div class="reset-icon"><i class="fa-solid fa-envelope-open-text"></i></div>
                 <h4>Check Your Inbox!</h4>
                 <p>We've sent a password reset link to your email or an SMS to your phone. Follow the instructions to set a new password.</p>
                 <button class="login-btn" style="max-width:220px; margin:0 auto; display:block;" onclick="showLogin()">Back to Login</button>
@@ -119,7 +121,7 @@
     <!-- RIGHT: VISUAL PANEL -->
     <div class="login-right">
         <div class="right-content">
-            <div class="right-badge">🌾 Trusted by 2,400+ Farmers</div>
+            <div class="right-badge"><i class="fa-solid fa-wheat-awn"></i> Trusted by 2,400+ Farmers</div>
 
             <h2>Your Farm.<br>Your <span>Market.</span><br>Your Terms.</h2>
 
@@ -229,8 +231,8 @@
     function togglePw() {
         const input = document.getElementById('password');
         const btn = document.querySelector('.toggle-pw');
-        if (input.type === 'password') { input.type = 'text'; btn.textContent = '🙈'; }
-        else { input.type = 'password'; btn.textContent = '👁'; }
+        if (input.type === 'password') { input.type = 'text'; btn.innerHTML = '<i class="fa-solid fa-eye-slash"></i>'; }
+        else { input.type = 'password'; btn.innerHTML = '<i class="fa-solid fa-eye"></i>'; }
     }
 
     function showForgot(e) {

@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/USER/Desktop/**)",
+      "Bash(npm create:*)",
+      "Bash(npm install:*)",
+      "Bash(cp /c/Users/USER/Desktop/frontend/favicon.png /c/Users/USER/Desktop/agriconnect/public/favicon.png)",
+      "Bash(cp /c/Users/USER/Desktop/frontend/style.css /c/Users/USER/Desktop/agriconnect/src/style.css)"
+    ]
+  }
+}

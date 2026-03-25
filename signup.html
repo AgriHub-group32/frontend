@@ -6,6 +6,8 @@
     <title>Sign Up — Agriconnect</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="icon" type="image/png" href="favicon.png">
     <script src="js/config.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/api.js"></script>
@@ -32,29 +34,29 @@
     <!-- LEFT PANEL -->
     <div class="signup-left">
         <div class="left-content">
-            <div class="left-badge">🌱 Free to Join</div>
+            <div class="left-badge"><i class="fa-solid fa-seedling"></i> Free to Join</div>
             <h2>Start Selling <span>Smarter</span><br>Today</h2>
             <p>Join thousands of farmers and buyers across Ghana who are already trading directly, earning more, and growing their businesses with Agriconnect.</p>
 
             <div class="perks-list">
                 <div class="perk-row">
-                    <div class="perk-icon">✅</div>
+                    <div class="perk-icon"><i class="fa-solid fa-circle-check"></i></div>
                     <p><strong>Free account</strong> — no setup fees or hidden charges</p>
                 </div>
                 <div class="perk-row">
-                    <div class="perk-icon">📈</div>
+                    <div class="perk-icon"><i class="fa-solid fa-chart-line"></i></div>
                     <p><strong>Real-time prices</strong> — know your crop's market value instantly</p>
                 </div>
                 <div class="perk-row">
-                    <div class="perk-icon">🤝</div>
+                    <div class="perk-icon"><i class="fa-solid fa-handshake"></i></div>
                     <p><strong>Verified buyers</strong> — trade safely with screened partners</p>
                 </div>
                 <div class="perk-row">
-                    <div class="perk-icon">📦</div>
+                    <div class="perk-icon"><i class="fa-solid fa-box"></i></div>
                     <p><strong>Logistics support</strong> — get your produce delivered hassle-free</p>
                 </div>
                 <div class="perk-row">
-                    <div class="perk-icon">💬</div>
+                    <div class="perk-icon"><i class="fa-solid fa-message"></i></div>
                     <p><strong>Direct messaging</strong> — negotiate deals without middlemen</p>
                 </div>
             </div>
@@ -86,8 +88,8 @@
 
             <!-- ROLE TOGGLE -->
             <div class="role-toggle">
-                <button class="role-btn active" onclick="setRole('farmer', this)">🌾 I'm a Farmer</button>
-                <button class="role-btn" onclick="setRole('buyer', this)">🛒 I'm a Buyer</button>
+                <button class="role-btn active" onclick="setRole('farmer', this)"><i class="fa-solid fa-wheat-awn"></i> I'm a Farmer</button>
+                <button class="role-btn" onclick="setRole('buyer', this)"><i class="fa-solid fa-cart-shopping"></i> I'm a Buyer</button>
             </div>
 
             <!-- STEPS INDICATOR -->
@@ -110,8 +112,8 @@
             <!-- STEP 1: PERSONAL INFO -->
             <div class="form-step active" id="step1">
                 <div class="social-signup">
-                    <button class="social-btn-signup" disabled style="opacity:0.5;cursor:not-allowed;" title="Coming soon">🇬 Sign up with Google (Coming Soon)</button>
-                    <button class="social-btn-signup" disabled style="opacity:0.5;cursor:not-allowed;" title="Coming soon">📘 Sign up with Facebook (Coming Soon)</button>
+                    <button class="social-btn-signup" disabled style="opacity:0.5;cursor:not-allowed;" title="Coming soon"><i class="fa-brands fa-google"></i> Sign up with Google (Coming Soon)</button>
+                    <button class="social-btn-signup" disabled style="opacity:0.5;cursor:not-allowed;" title="Coming soon"><i class="fa-brands fa-facebook-f"></i> Sign up with Facebook (Coming Soon)</button>
                 </div>
 
                 <div class="divider"><span>fill in your details below</span></div>
@@ -234,7 +236,7 @@
                     <label>Create Password</label>
                     <div class="password-wrap">
                         <input type="password" id="pw1" placeholder="At least 8 characters" oninput="checkStrength()" />
-                        <button class="toggle-pw" type="button" onclick="togglePw('pw1', this)">👁</button>
+                        <button class="toggle-pw" type="button" onclick="togglePw('pw1', this)"><i class="fa-solid fa-eye"></i></button>
                     </div>
                     <div class="pw-strength">
                         <div class="pw-bar" id="bar1"></div>
@@ -250,7 +252,7 @@
                     <label>Confirm Password</label>
                     <div class="password-wrap">
                         <input type="password" id="pw2" placeholder="Re-enter your password" />
-                        <button class="toggle-pw" type="button" onclick="togglePw('pw2', this)">👁</button>
+                        <button class="toggle-pw" type="button" onclick="togglePw('pw2', this)"><i class="fa-solid fa-eye"></i></button>
                     </div>
                     <span class="error-msg" id="pw2Err">Passwords do not match.</span>
                 </div>
@@ -278,7 +280,7 @@
             <!-- STEP 4: OTP VERIFICATION -->
             <div class="form-step" id="step4">
                 <div class="otp-header">
-                    <div class="otp-icon">📱</div>
+                    <div class="otp-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
                     <h4>Verify Your Number</h4>
                     <p id="otpSubtitle">We sent a 6-digit code to your number. Enter it below to confirm your account.</p>
                 </div>
@@ -309,7 +311,7 @@
 
         <!-- SUCCESS SCREEN -->
         <div class="success-screen" id="successScreen">
-            <div class="success-circle">🎉</div>
+            <div class="success-circle"><i class="fa-solid fa-circle-check"></i></div>
             <h3>You're In!</h3>
             <p>Your Agriconnect account has been created successfully. You can now start browsing markets, listing your produce, and connecting with buyers.</p>
             <div class="success-actions">
@@ -595,8 +597,8 @@
 
     function togglePw(fieldId, btn) {
         const input = document.getElementById(fieldId);
-        if (input.type === 'password') { input.type = 'text'; btn.textContent = '🙈'; }
-        else { input.type = 'password'; btn.textContent = '👁'; }
+        if (input.type === 'password') { input.type = 'text'; btn.innerHTML = '<i class="fa-solid fa-eye-slash"></i>'; }
+        else { input.type = 'password'; btn.innerHTML = '<i class="fa-solid fa-eye"></i>'; }
     }
 
     function checkStrength() {
