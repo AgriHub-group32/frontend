@@ -6,6 +6,9 @@
     <title>Log In — Agriconnect</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
 </head>
 <body>
 
@@ -38,11 +41,11 @@
 
             <!-- SOCIAL LOGIN -->
             <div class="social-login">
-                <button class="social-btn" onclick="socialLogin('Google')">🇬 Continue with Google</button>
-                <button class="social-btn" onclick="socialLogin('Facebook')">📘 Continue with Facebook</button>
+                <button class="social-btn" disabled style="opacity:0.5;cursor:not-allowed;">🇬 Continue with Google (Coming Soon)</button>
+                <button class="social-btn" disabled style="opacity:0.5;cursor:not-allowed;">📘 Continue with Facebook (Coming Soon)</button>
             </div>
 
-            <div class="divider"><span>or log in with your details</span></div>
+            <div class="divider"><span>log in with your email below</span></div>
 
             <!-- ALERT -->
             <div class="alert-box" id="alertBox"></div>
@@ -154,11 +157,10 @@
 </div>
 
 <script>
-    // Demo credentials hint
-    const DEMO_EMAIL = 'farmer@agriconnect.gh';
-    const DEMO_PASS  = 'Demo1234!';
+    // Redirect if already logged in
+    Auth.redirectIfLoggedIn();
 
-    function attemptLogin() {
+    async function attemptLogin() {
         const email = document.getElementById('email').value.trim();
         const pass  = document.getElementById('password').value;
         let valid = true;
@@ -187,24 +189,26 @@
         const btn = document.getElementById('loginBtn');
         btn.classList.add('loading');
         btn.innerHTML = '<span class="spinner"></span> Logging in...';
+        btn.disabled = true;
 
-        setTimeout(() => {
+        try {
+            const data = await API.login(email, pass);
+
+            // Save tokens and user to localStorage
+            Auth.saveSession(data);
+
+            showAlert('success', 'Login successful! Redirecting to your dashboard...');
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 1000);
+        } catch (err) {
             btn.classList.remove('loading');
             btn.innerHTML = 'Log In →';
-
-            // Demo: accept demo credentials OR any non-empty input for demo
-            if (email && pass.length >= 6) {
-                showAlert('success', '✅ Login successful! Redirecting to your dashboard...');
-                setTimeout(() => {
-                    // In production this would redirect to dashboard
-                    window.location.href = 'index.html';
-                }, 1800);
-            } else {
-                showAlert('error', '❌ Incorrect email or password. Try: <strong>' + DEMO_EMAIL + '</strong> / <strong>' + DEMO_PASS + '</strong>');
-                document.getElementById('email').classList.add('error');
-                document.getElementById('password').classList.add('error');
-            }
-        }, 1400);
+            btn.disabled = false;
+            showAlert('error', err.message || 'Invalid email or password.');
+            document.getElementById('email').classList.add('error');
+            document.getElementById('password').classList.add('error');
+        }
     }
 
     function showAlert(type, msg) {
@@ -246,7 +250,7 @@
         document.getElementById('forgotAlert').classList.remove('show');
     }
 
-    function sendReset() {
+    async function sendReset() {
         const contact = document.getElementById('resetContact').value.trim();
         document.getElementById('resetErr').classList.remove('show');
 
@@ -259,21 +263,23 @@
         btn.classList.add('loading');
         btn.innerHTML = '<span class="spinner"></span> Sending...';
 
-        setTimeout(() => {
+        try {
+            await API.requestPasswordReset(contact);
             btn.classList.remove('loading');
             btn.innerHTML = 'Send Reset Link →';
             document.getElementById('forgotForm').style.display = 'none';
             document.getElementById('resetSuccess').classList.add('show');
-        }, 1400);
+        } catch (err) {
+            btn.classList.remove('loading');
+            btn.innerHTML = 'Send Reset Link →';
+            const alert = document.getElementById('forgotAlert');
+            alert.className = 'alert-box error show';
+            alert.textContent = err.message || 'Could not send reset link.';
+        }
     }
 
     function socialLogin(provider) {
-        const btn = document.getElementById('loginBtn');
-        showAlert('success', '🔄 Connecting to ' + provider + '... (Demo mode)');
-        setTimeout(() => {
-            showAlert('success', '✅ ' + provider + ' login successful! Redirecting...');
-            setTimeout(() => { window.location.href = 'index.html'; }, 1500);
-        }, 1200);
+        showAlert('error', 'Social login with ' + provider + ' is not yet available. Please use email and password.');
     }
 </script>
 
