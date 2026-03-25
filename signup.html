@@ -6,6 +6,9 @@
     <title>Sign Up — Agriconnect</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
 </head>
 <body>
 
@@ -107,11 +110,11 @@
             <!-- STEP 1: PERSONAL INFO -->
             <div class="form-step active" id="step1">
                 <div class="social-signup">
-                    <button class="social-btn-signup">🇬 Sign up with Google</button>
-                    <button class="social-btn-signup">📘 Sign up with Facebook</button>
+                    <button class="social-btn-signup" disabled style="opacity:0.5;cursor:not-allowed;" title="Coming soon">🇬 Sign up with Google (Coming Soon)</button>
+                    <button class="social-btn-signup" disabled style="opacity:0.5;cursor:not-allowed;" title="Coming soon">📘 Sign up with Facebook (Coming Soon)</button>
                 </div>
 
-                <div class="divider"><span>or fill in your details</span></div>
+                <div class="divider"><span>fill in your details below</span></div>
 
                 <div class="form-row">
                     <div class="form-group">
@@ -310,8 +313,8 @@
             <h3>You're In!</h3>
             <p>Your Agriconnect account has been created successfully. You can now start browsing markets, listing your produce, and connecting with buyers.</p>
             <div class="success-actions">
-                <a href="markets.html" class="btn-go btn-go-primary">Browse Markets</a>
-                <a href="farmers.html" class="btn-go btn-go-outline">Learn More</a>
+                <a href="dashboard.html" class="btn-go btn-go-primary">Go to Dashboard</a>
+                <a href="markets.html" class="btn-go btn-go-outline">Browse Markets</a>
             </div>
         </div>
 
@@ -406,7 +409,7 @@
         return valid;
     }
 
-    function submitForm() {
+    async function submitForm() {
         document.getElementById('pw1Err').classList.remove('show');
         document.getElementById('pw2Err').classList.remove('show');
         document.getElementById('termsErr').classList.remove('show');
@@ -419,9 +422,54 @@
         if (!terms)          { document.getElementById('termsErr').classList.add('show'); valid = false; }
         if (!valid) return;
 
-        // Generate OTP and move to step 4
-        sendOTP();
-        goToStep(4);
+        // Collect all form data
+        const fullName = document.getElementById('fname').value.trim() + ' ' + document.getElementById('lname').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const password = pw1;
+        // Map frontend 'buyer' to backend 'wholesaler'
+        const type = currentRole === 'buyer' ? 'wholesaler' : 'farmer';
+
+        // Show loading
+        const btn = document.querySelector('.btn-submit');
+        const origText = btn.innerHTML;
+        btn.innerHTML = '<span class="spinner"></span> Creating account...';
+        btn.disabled = true;
+
+        try {
+            const data = await API.signup(fullName, email, password, type);
+
+            // Save session
+            Auth.saveSession(data);
+
+            // After signup, update profile with extra fields (phone, location, farm_name/business_name)
+            const profileData = {};
+            const phone = document.getElementById('phone').value.trim();
+            const region = document.getElementById('region').value;
+            const bizName = document.getElementById('bizName').value.trim();
+            if (phone) profileData.phone = phone;
+            if (region) profileData.location = region;
+            if (bizName) {
+                if (type === 'farmer') profileData.farm_name = bizName;
+                else profileData.business_name = bizName;
+            }
+
+            if (Object.keys(profileData).length > 0) {
+                try { await API.updateProfile(profileData); } catch (e) { /* non-critical */ }
+            }
+
+            // Account created — now go to OTP verification step
+            btn.innerHTML = origText;
+            btn.disabled = false;
+            sendOTP();
+            goToStep(4);
+        } catch (err) {
+            btn.innerHTML = origText;
+            btn.disabled = false;
+            // Show error
+            const termsErr = document.getElementById('termsErr');
+            termsErr.textContent = err.message || 'Signup failed. Please try again.';
+            termsErr.classList.add('show');
+        }
     }
 
     function sendOTP() {
