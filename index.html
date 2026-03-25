@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agriconnect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <!-- small style block only for mobile responsiveness -->
+<style>
+    @media (max-width: 768px) {
+        .testimonials-grid {
+            flex-direction: column !important;
+            align-items: center !important;
+        }
+        .testimonial-card {
+            border-right: none !important;
+            border-bottom: 1px solid rgba(180, 155, 90, 0.25) !important;
+            width: 100% !important;
+            max-width: 380px !important;
+            padding: 30px 20px !important;
+        }
+        .testimonial-card:last-child {
+            border-bottom: none !important;
+        }
+    }
+</style>
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+    <h1><a href="index.html">Agriconnect</a></h1>
+    <nav>
+        <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="farmers.html">Farmers</a></li>
+            <li><a href="markets.html">Markets</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="signup.html" class="nav-cta">Join Now</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- HERO -->
+<main>
+    <section class="hero">
+        <div class="hero-badge">🌱 Empowering African Agriculture</div>
+        <h2>Connecting Farmers<br>to <span>Markets</span></h2>
+        <p>Agriconnect helps farmers connect directly with buyers and markets to sell their produce. Browse our extensive network and find the best deals for your crops.</p>
+        <div class="hero-buttons">
+            <a href="signup.html" class="btn btn-primary">Get Started as a Farmer</a>
+            <a href="markets.html" class="btn btn-outline">Browse Markets</a>
+        </div>
+        <div class="hero-stats">
+            <div class="stat">
+                <div class="stat-number">2,400+</div>
+                <div class="stat-label">Farmers</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">850+</div>
+                <div class="stat-label">Active Buyers</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">120+</div>
+                <div class="stat-label">Markets</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">98%</div>
+                <div class="stat-label">Satisfaction</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY CHOOSE US -->
+    <section style="background: var(--cream); padding: 6rem 5%;">
+        <div class="why-section" style="padding: 0;">
+            <div class="why-text">
+                <h2>Why Choose Agriconnect?</h2>
+                <p>We provide a seamless experience for farmers to access markets, get real-time price updates, and connect directly with verified buyers — no middlemen, no guesswork.</p>
+                <p>Our platform is built with transparency and fairness at its core. Whether you're a smallholder or a large-scale farmer, Agriconnect gives you the tools to grow your business confidently.</p>
+                <a href="about.html" class="btn btn-primary" style="background: var(--green-mid); color: white;">Learn More About Us</a>
+            </div>
+            <div class="why-image">
+                <div class="why-image-inner">
+                    <div class="icon">🤝</div>
+                    <h3>Direct Connections</h3>
+                    <p>Farmers meet buyers face-to-face through our verified network — building trust and better prices.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features-section">
+        <h2>Our Features</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🏪</div>
+                <h3>Market Access</h3>
+                <p>Connect to local and regional markets easily and sell your produce directly to verified buyers without intermediaries.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📈</div>
+                <h3>Price Transparency</h3>
+                <p>Get real-time price updates and market trends so you can make informed, confident decisions about your crops.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Verified Buyers</h3>
+                <p>Every buyer on our platform is vetted and verified, so you can trade with confidence and security.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📦</div>
+                <h3>Logistics Support</h3>
+                <p>Access affordable transport and delivery options to get your produce to buyers quickly and in great condition.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>Direct Messaging</h3>
+                <p>Chat directly with buyers to negotiate deals, ask questions, and build lasting business relationships.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎓</div>
+                <h3>Support Services</h3>
+                <p>Access farming resources, guides, and dedicated customer support to help your business thrive.</p>
+            </div>
+        </div>
+    </section>
+
+
+    </section>    <!-- HOW IT WORKS -->
+    <section class="how-section">
+        <h2>How It Works</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">01</div>
+                <h3>Create Your Profile</h3>
+                <p>Sign up and set up your farmer profile with your location, crop types, and produce details.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">02</div>
+                <h3>List Your Produce</h3>
+                <p>Add your available crops with quantity, quality, and asking price. It only takes a few minutes.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">03</div>
+                <h3>Connect with Buyers</h3>
+                <p>Verified buyers discover your listings and reach out directly to negotiate and close deals.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">04</div>
+                <h3>Get Paid & Grow</h3>
+                <p>Complete transactions securely and build a reputation that attracts more buyers over time.</p>
+            </div>
+        </div>
+    </section>
+
+<!-- TESTIMONIALS -->
+<section style="background-color: #f0ebe0; padding: 70px 40px; font-family: 'Lora', Georgia, serif;">
+    <h2 style="text-align: center; font-family: 'Playfair Display', Georgia, serif; font-size: 2.8rem; font-weight: 800; color: #1e3d2f; margin-bottom: 70px;">What Farmers Are Saying</h2>
+    <div class="testimonials-grid" style="display: flex; flex-direction: row; justify-content: center; align-items: flex-start; max-width: 1100px; margin: 0 auto;">
+        <div class="testimonial-card" style="flex: 1; text-align: center; padding: 10px 36px; border-right: 1px solid rgba(180, 155, 90, 0.25); display: flex; flex-direction: column; gap: 16px;">
+            <div style="font-size: 1.1rem; color: #c4a45a; letter-spacing: 4px;">★★★★★</div>
+            <p style="font-family: 'Lora', Georgia, serif; font-size: 0.9rem; color: #4a4a3a; line-height: 1.8; font-style: italic;">"Since joining Agriconnect, I've doubled my income. I no longer have to worry about finding buyers — they come to me."</p>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 8px;">
+                <div style="width: 44px; height: 44px; border-radius: 50%; background-color: #1e3d2f; color: #f0ebe0; font-family: 'Playfair Display', Georgia, serif; font-size: 0.85rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">KA</div>
+                <div>
+                    <div style="font-family: 'Playfair Display', Georgia, serif; font-size: 0.95rem; font-weight: 700; color: #1e3d2f; text-align: left;">Kwame Asante</div>
+                    <div style="font-family: 'Lora', Georgia, serif; font-size: 0.78rem; color: #7a7a60; margin-top: 3px; text-align: left;">Maize Farmer, Ashanti Region</div>
+                </div>
+            </div>
+        </div>
+        <div class="testimonial-card" style="flex: 1; text-align: center; padding: 10px 36px; border-right: 1px solid rgba(180, 155, 90, 0.25); display: flex; flex-direction: column; gap: 16px;">
+            <div style="font-size: 1.1rem; color: #c4a45a; letter-spacing: 4px;">★★★★★</div>
+            <p style="font-family: 'Lora', Georgia, serif; font-size: 0.9rem; color: #4a4a3a; line-height: 1.8; font-style: italic;">"The price transparency feature alone has saved me from being underpaid. I always know what my tomatoes are worth now."</p>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 8px;">
+                <div style="width: 44px; height: 44px; border-radius: 50%; background-color: #1e3d2f; color: #f0ebe0; font-family: 'Playfair Display', Georgia, serif; font-size: 0.85rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">AB</div>
+                <div>
+                    <div style="font-family: 'Playfair Display', Georgia, serif; font-size: 0.95rem; font-weight: 700; color: #1e3d2f; text-align: left;">Abena Boateng</div>
+                    <div style="font-family: 'Lora', Georgia, serif; font-size: 0.78rem; color: #7a7a60; margin-top: 3px; text-align: left;">Vegetable Farmer, Bono Region</div>
+                </div>
+            </div>
+        </div>
+        <div class="testimonial-card" style="flex: 1; text-align: center; padding: 10px 36px; display: flex; flex-direction: column; gap: 16px;">
+            <div style="font-size: 1.1rem; color: #c4a45a; letter-spacing: 4px;">★★★★★</div>
+            <p style="font-family: 'Lora', Georgia, serif; font-size: 0.9rem; color: #4a4a3a; line-height: 1.8; font-style: italic;">"I connected with a buyer in Accra through Agriconnect and now supply them every week. It changed everything for my family."</p>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 8px;">
+                <div style="width: 44px; height: 44px; border-radius: 50%; background-color: #1e3d2f; color: #f0ebe0; font-family: 'Playfair Display', Georgia, serif; font-size: 0.85rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">YD</div>
+                <div>
+                    <div style="font-family: 'Playfair Display', Georgia, serif; font-size: 0.95rem; font-weight: 700; color: #1e3d2f; text-align: left;">Yaw Darko</div>
+                    <div style="font-family: 'Lora', Georgia, serif; font-size: 0.78rem; color: #7a7a60; margin-top: 3px; text-align: left;">Cocoa Farmer, Western Region</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- CTA BANNER -->
+    <section class="cta-section">
+        <h2>Ready to Grow Your Farm Business?</h2>
+        <p>Join thousands of farmers already using Agriconnect to reach more buyers and earn better prices.</p>
+        <div class="hero-buttons">
+            <a href="signup.html" class="btn btn-primary">Sign Up Free Today</a>
+            <a href="contact.html" class="btn btn-outline">Talk to Us First</a>
+        </div>
+    </section>
+</main>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <h3>Agriconnect</h3>
+            <p>Empowering farmers across Africa by connecting them directly to buyers and markets — fairly, transparently, and efficiently.</p>
+        </div>
+        <div class="footer-links">
+            <h4>Platform</h4>
+            <ul>
+                <li><a href="farmers.html">For Farmers</a></li>
+                <li><a href="markets.html">Browse Markets</a></li>
+                <li><a href="signup.html">Sign Up</a></li>
+                <li><a href="login.html">Log In</a></li>
+            </ul>
+        </div>
+        <div class="footer-links">
+            <h4>Company</h4>
+            <ul>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="terms.html">Terms of Use</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2026 Agriconnect. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>
