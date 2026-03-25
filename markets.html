@@ -6,6 +6,9 @@
     <title>Markets — Agriconnect</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
 </head>
 <body>
 
@@ -69,9 +72,9 @@
         <div class="search-bar">
             <div class="search-input-wrap">
                 <span>🔍</span>
-                <input type="text" placeholder="Search crops, farmers, regions..." />
+                <input type="text" id="searchInput" placeholder="Search crops, farmers, regions..." onkeydown="if(event.key==='Enter') searchListings()" />
             </div>
-            <select class="filter-select">
+            <select class="filter-select" id="categoryFilter">
                 <option value="">All Crops</option>
                 <option>Maize & Cereals</option>
                 <option>Tomatoes</option>
@@ -83,7 +86,7 @@
                 <option>Fruits</option>
                 <option>Peppers & Spices</option>
             </select>
-            <select class="filter-select">
+            <select class="filter-select" id="regionFilter">
                 <option value="">All Regions</option>
                 <option>Ashanti</option>
                 <option>Greater Accra</option>
@@ -102,7 +105,7 @@
                 <option>Western North</option>
                 <option>Bono East</option>
             </select>
-            <button class="search-btn">Search</button>
+            <button class="search-btn" onclick="searchListings()">Search</button>
         </div>
     </div>
 
@@ -110,221 +113,18 @@
     <section class="listings-section" id="listings">
         <div class="listings-header">
             <h2>Live Produce Listings</h2>
-            <span class="listings-count">Showing 9 of 248 listings</span>
+            <span class="listings-count">Loading...</span>
         </div>
         <div class="listings-grid">
-
-            <div class="listing-card">
-                <div class="listing-banner banner-green">
-                    <span class="emoji">🌽</span>
-                    <span class="badge">Fresh Stock</span>
-                </div>
-                <div class="listing-body">
-                    <h3>White Maize — Grade A</h3>
-                    <div class="listing-meta">
-                        <span>📍 Ashanti Region</span>
-                        <span>⚖️ 500 bags available</span>
-                        <span>🌾 Harvested Mar 2026</span>
-                    </div>
-                    <div class="listing-price-row">
-                        <div class="listing-price">GH₵ 320 <span>/ 50kg bag</span></div>
-                        <span class="listing-tag tag-available">Available</span>
-                    </div>
-                </div>
-                <div class="listing-footer">
-                    <a href="contact.html" class="btn-contact">Contact Farmer</a>
-                    <a href="#" class="btn-details">View Details</a>
-                </div>
+            <!-- Listings loaded dynamically from backend -->
+            <div style="text-align:center; padding: 3rem; color: var(--text-muted); grid-column: 1/-1;">
+                <div class="spinner" style="margin: 0 auto 1rem;"></div>
+                <p>Loading listings...</p>
             </div>
-
-            <div class="listing-card">
-                <div class="listing-banner banner-red">
-                    <span class="emoji">🍅</span>
-                    <span class="badge">Limited</span>
-                </div>
-                <div class="listing-body">
-                    <h3>Roma Tomatoes — Large</h3>
-                    <div class="listing-meta">
-                        <span>📍 Ahafo Region</span>
-                        <span>⚖️ 80 crates left</span>
-                        <span>🌾 Harvested Mar 2026</span>
-                    </div>
-                    <div class="listing-price-row">
-                        <div class="listing-price">GH₵ 85 <span>/ crate</span></div>
-                        <span class="listing-tag tag-limited">Limited</span>
-                    </div>
-                </div>
-                <div class="listing-footer">
-                    <a href="contact.html" class="btn-contact">Contact Farmer</a>
-                    <a href="#" class="btn-details">View Details</a>
-                </div>
-            </div>
-
-            <div class="listing-card">
-                <div class="listing-banner banner-earth">
-                    <span class="emoji">🍠</span>
-                    <span class="badge">Bulk Deal</span>
-                </div>
-                <div class="listing-body">
-                    <h3>Pona Yam — Premium</h3>
-                    <div class="listing-meta">
-                        <span>📍 Northern Region</span>
-                        <span>⚖️ 1,200 bags available</span>
-                        <span>🌾 Harvested Feb 2026</span>
-                    </div>
-                    <div class="listing-price-row">
-                        <div class="listing-price">GH₵ 210 <span>/ bag</span></div>
-                        <span class="listing-tag tag-available">Available</span>
-                    </div>
-                </div>
-                <div class="listing-footer">
-                    <a href="contact.html" class="btn-contact">Contact Farmer</a>
-                    <a href="#" class="btn-details">View Details</a>
-                </div>
-            </div>
-
-            <div class="listing-card">
-                <div class="listing-banner banner-gold">
-                    <span class="emoji">🍫</span>
-                    <span class="badge">Export Quality</span>
-                </div>
-                <div class="listing-body">
-                    <h3>Dry Cocoa Beans</h3>
-                    <div class="listing-meta">
-                        <span>📍 Western Region</span>
-                        <span>⚖️ 300 bags available</span>
-                        <span>🌾 Harvested Jan 2026</span>
-                    </div>
-                    <div class="listing-price-row">
-                        <div class="listing-price">GH₵ 1,450 <span>/ 64kg bag</span></div>
-                        <span class="listing-tag tag-available">Available</span>
-                    </div>
-                </div>
-                <div class="listing-footer">
-                    <a href="contact.html" class="btn-contact">Contact Farmer</a>
-                    <a href="#" class="btn-details">View Details</a>
-                </div>
-            </div>
-
-            <div class="listing-card">
-                <div class="listing-banner banner-teal">
-                    <span class="emoji">🥬</span>
-                    <span class="badge">Fresh Stock</span>
-                </div>
-                <div class="listing-body">
-                    <h3>Cabbage — Medium Size</h3>
-                    <div class="listing-meta">
-                        <span>📍 Eastern Region</span>
-                        <span>⚖️ 400 heads available</span>
-                        <span>🌾 Harvested Mar 2026</span>
-                    </div>
-                    <div class="listing-price-row">
-                        <div class="listing-price">GH₵ 40 <span>/ head</span></div>
-                        <span class="listing-tag tag-available">Available</span>
-                    </div>
-                </div>
-                <div class="listing-footer">
-                    <a href="contact.html" class="btn-contact">Contact Farmer</a>
-                    <a href="#" class="btn-details">View Details</a>
-                </div>
-            </div>
-
-            <div class="listing-card">
-                <div class="listing-banner banner-green">
-                    <span class="emoji">🍌</span>
-                    <span class="badge">New Listing</span>
-                </div>
-                <div class="listing-body">
-                    <h3>Plantain — Ripe & Unripe</h3>
-                    <div class="listing-meta">
-                        <span>📍 Volta Region</span>
-                        <span>⚖️ 600 bunches available</span>
-                        <span>🌾 Harvested Mar 2026</span>
-                    </div>
-                    <div class="listing-price-row">
-                        <div class="listing-price">GH₵ 55 <span>/ bunch</span></div>
-                        <span class="listing-tag tag-available">Available</span>
-                    </div>
-                </div>
-                <div class="listing-footer">
-                    <a href="contact.html" class="btn-contact">Contact Farmer</a>
-                    <a href="#" class="btn-details">View Details</a>
-                </div>
-            </div>
-
-            <div class="listing-card">
-                <div class="listing-banner banner-purple">
-                    <span class="emoji">🫘</span>
-                    <span class="badge">Organic</span>
-                </div>
-                <div class="listing-body">
-                    <h3>Black-Eyed Cowpea</h3>
-                    <div class="listing-meta">
-                        <span>📍 Upper East Region</span>
-                        <span>⚖️ 200 bags available</span>
-                        <span>🌾 Harvested Feb 2026</span>
-                    </div>
-                    <div class="listing-price-row">
-                        <div class="listing-price">GH₵ 420 <span>/ 50kg bag</span></div>
-                        <span class="listing-tag tag-available">Available</span>
-                    </div>
-                </div>
-                <div class="listing-footer">
-                    <a href="contact.html" class="btn-contact">Contact Farmer</a>
-                    <a href="#" class="btn-details">View Details</a>
-                </div>
-            </div>
-
-            <div class="listing-card">
-                <div class="listing-banner banner-red">
-                    <span class="emoji">🌶️</span>
-                    <span class="badge">Spicy Grade</span>
-                </div>
-                <div class="listing-body">
-                    <h3>Shito Pepper — Dry</h3>
-                    <div class="listing-meta">
-                        <span>📍 Greater Accra</span>
-                        <span>⚖️ 150 crates left</span>
-                        <span>🌾 Harvested Feb 2026</span>
-                    </div>
-                    <div class="listing-price-row">
-                        <div class="listing-price">GH₵ 110 <span>/ crate</span></div>
-                        <span class="listing-tag tag-limited">Limited</span>
-                    </div>
-                </div>
-                <div class="listing-footer">
-                    <a href="contact.html" class="btn-contact">Contact Farmer</a>
-                    <a href="#" class="btn-details">View Details</a>
-                </div>
-            </div>
-
-            <div class="listing-card">
-                <div class="listing-banner banner-earth">
-                    <span class="emoji">🍠</span>
-                    <span class="badge">Bulk Deal</span>
-                </div>
-                <div class="listing-body">
-                    <h3>Cassava — Fresh Tubers</h3>
-                    <div class="listing-meta">
-                        <span>📍 Central Region</span>
-                        <span>⚖️ 800 bags available</span>
-                        <span>🌾 Harvested Mar 2026</span>
-                    </div>
-                    <div class="listing-price-row">
-                        <div class="listing-price">GH₵ 130 <span>/ bag</span></div>
-                        <span class="listing-tag tag-available">Available</span>
-                    </div>
-                </div>
-                <div class="listing-footer">
-                    <a href="contact.html" class="btn-contact">Contact Farmer</a>
-                    <a href="#" class="btn-details">View Details</a>
-                </div>
-            </div>
-
         </div>
 
-        <div style="text-align: center; margin-top: 3rem;">
-            <a href="signup.html" class="btn btn-green">Load More Listings</a>
+        <div style="text-align: center; margin-top: 3rem;" id="loadMoreWrap">
+            <button class="btn btn-green" id="loadMoreBtn" onclick="loadMore()">Load More Listings</button>
         </div>
     </section>
 
@@ -483,6 +283,32 @@
 
 </main>
 
+<!-- DETAIL MODAL -->
+<div class="modal-overlay" id="detailModal" onclick="if(event.target===this)closeModal()">
+    <div class="modal-card">
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <div id="modalContent">Loading...</div>
+    </div>
+</div>
+<style>
+    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;justify-content:center;align-items:center;padding:2rem;}
+    .modal-overlay.show{display:flex;}
+    .modal-card{background:#fff;border-radius:16px;max-width:560px;width:100%;max-height:80vh;overflow-y:auto;padding:2.5rem;position:relative;animation:fadeUp 0.3s ease;}
+    .modal-close{position:absolute;top:1rem;right:1.2rem;background:none;border:none;font-size:1.8rem;cursor:pointer;color:var(--text-muted);line-height:1;}
+    .modal-close:hover{color:var(--green-dark);}
+    .modal-card h3{font-family:'Playfair Display',serif;color:var(--green-dark);font-size:1.5rem;margin-bottom:0.5rem;}
+    .modal-card .detail-row{display:flex;justify-content:space-between;padding:0.6rem 0;border-bottom:1px solid #eee;font-size:0.95rem;}
+    .modal-card .detail-row:last-child{border-bottom:none;}
+    .modal-card .detail-label{color:var(--text-muted);}
+    .modal-card .detail-value{font-weight:500;color:var(--green-dark);text-align:right;}
+    .modal-card .detail-price{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--green-dark);margin:1rem 0;}
+    .modal-card .detail-actions{display:flex;gap:0.8rem;margin-top:1.5rem;}
+    .modal-card .detail-actions a,.modal-card .detail-actions button{flex:1;padding:0.8rem;border-radius:8px;text-align:center;font-family:'DM Sans',sans-serif;font-size:0.95rem;cursor:pointer;text-decoration:none;border:none;}
+    .modal-card .btn-order{background:var(--green-mid);color:#fff;}
+    .modal-card .btn-order:hover{background:var(--green-dark);}
+    .modal-card .btn-msg{background:var(--cream);color:var(--green-dark);border:1px solid var(--green-mid);}
+</style>
+
 <!-- FOOTER -->
 <footer>
     <div class="footer-grid">
@@ -513,6 +339,228 @@
         <p>© 2026 Agriconnect. All rights reserved.</p>
     </div>
 </footer>
+
+<script>
+    let currentPage = 1;
+    let totalPages = 1;
+    const LIMIT = 9;
+    let isFirstLoad = true;
+
+    // Banner color classes based on category
+    const bannerColors = {
+        'Maize & Cereals': 'banner-green',
+        'Tomatoes': 'banner-red',
+        'Yam & Cassava': 'banner-earth',
+        'Cocoa': 'banner-gold',
+        'Vegetables': 'banner-teal',
+        'Plantain': 'banner-green',
+        'Legumes': 'banner-purple',
+        'Peppers & Spices': 'banner-red',
+        'Fruits': 'banner-green',
+    };
+
+    const categoryEmojis = {
+        'Maize & Cereals': '🌽',
+        'Tomatoes': '🍅',
+        'Yam & Cassava': '🍠',
+        'Cocoa': '🍫',
+        'Vegetables': '🥬',
+        'Plantain': '🍌',
+        'Legumes': '🫘',
+        'Peppers & Spices': '🌶️',
+        'Fruits': '🍊',
+    };
+
+    function createListingCard(harvest) {
+        const banner = bannerColors[harvest.category] || 'banner-green';
+        const emoji = categoryEmojis[harvest.category] || '🌾';
+        const price = Number(harvest.unit_price).toLocaleString();
+        const qty = Number(harvest.quantity).toLocaleString();
+        const farmerName = harvest.user ? harvest.user.full_name : 'Farmer';
+        const location = harvest.location || (harvest.user && harvest.user.location) || 'Ghana';
+        const isAvailable = harvest.quantity > 0;
+        const images = harvest.harvest_image || [];
+        const hasImage = images.length > 0;
+
+        let bannerHtml;
+        if (hasImage) {
+            bannerHtml = '<div class="listing-banner" style="padding:0;height:180px;overflow:hidden;">' +
+                '<img src="' + CONFIG.API_BASE_URL + images[0].img_url + '" alt="' + harvest.name + '" style="width:100%;height:100%;object-fit:cover;" />' +
+                '<span class="badge" style="position:absolute;top:10px;right:10px;">' + (isAvailable ? 'Available' : 'Sold Out') + '</span>' +
+                (images.length > 1 ? '<span class="badge" style="position:absolute;top:10px;left:10px;background:rgba(0,0,0,0.5);">📷 ' + images.length + '</span>' : '') +
+            '</div>';
+        } else {
+            bannerHtml = '<div class="listing-banner ' + banner + '">' +
+                '<span class="emoji">' + emoji + '</span>' +
+                '<span class="badge">' + (isAvailable ? 'Available' : 'Sold Out') + '</span>' +
+            '</div>';
+        }
+
+        return '<div class="listing-card">' +
+            bannerHtml +
+            '<div class="listing-body">' +
+                '<h3>' + harvest.name + '</h3>' +
+                '<div class="listing-meta">' +
+                    '<span>📍 ' + location + '</span>' +
+                    '<span>⚖️ ' + qty + ' ' + (harvest.unit || 'units') + ' available</span>' +
+                    '<span>👤 ' + farmerName + '</span>' +
+                '</div>' +
+                '<div class="listing-price-row">' +
+                    '<div class="listing-price">GH₵ ' + price + ' <span>/ ' + (harvest.unit || 'unit') + '</span></div>' +
+                    '<span class="listing-tag ' + (isAvailable ? 'tag-available' : 'tag-limited') + '">' +
+                        (isAvailable ? 'Available' : 'Sold Out') +
+                    '</span>' +
+                '</div>' +
+            '</div>' +
+            '<div class="listing-footer">' +
+                (Auth.isLoggedIn()
+                    ? '<a href="dashboard.html?order=' + harvest.id + '" class="btn-contact">Place Order</a>'
+                    : '<a href="login.html" class="btn-contact">Login to Order</a>') +
+                '<a href="#" class="btn-details" onclick="viewDetails(' + harvest.id + '); return false;">View Details</a>' +
+            '</div>' +
+        '</div>';
+    }
+
+    async function loadListings(page, append) {
+        const search = document.getElementById('searchInput').value.trim();
+        const category = document.getElementById('categoryFilter').value;
+        const region = document.getElementById('regionFilter').value;
+
+        const params = { page, limit: LIMIT };
+        if (search) params.search = search;
+        if (category) params.category = category;
+        if (region) params.location = region;
+
+        const grid = document.querySelector('.listings-grid');
+        const countEl = document.querySelector('.listings-count');
+
+        if (!append) {
+            grid.innerHTML = '<div style="text-align:center; padding: 3rem; color: var(--text-muted);">Loading listings...</div>';
+        }
+
+        try {
+            const result = await API.searchMarketplace(params);
+            const listings = result.data || [];
+            totalPages = result.meta ? result.meta.totalPages : 1;
+            const total = result.meta ? result.meta.total : listings.length;
+
+            if (!append) grid.innerHTML = '';
+
+            if (listings.length === 0 && !append) {
+                grid.innerHTML = '<div style="text-align:center; padding: 3rem; color: var(--text-muted); grid-column: 1/-1;">' +
+                    '<h3>No listings found</h3><p>Try adjusting your search or filters.</p></div>';
+            } else {
+                listings.forEach(h => {
+                    grid.insertAdjacentHTML('beforeend', createListingCard(h));
+                });
+            }
+
+            const showing = grid.querySelectorAll('.listing-card').length;
+            countEl.textContent = 'Showing ' + showing + ' of ' + total + ' listings';
+
+            // Hide load more if no more pages
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            if (currentPage >= totalPages) {
+                loadMoreBtn.style.display = 'none';
+            } else {
+                loadMoreBtn.style.display = 'inline-block';
+            }
+        } catch (err) {
+            if (!append) {
+                grid.innerHTML = '<div style="text-align:center; padding: 3rem; color: var(--text-muted); grid-column: 1/-1;">' +
+                    '<h3>Could not load listings</h3>' +
+                    '<p>' + (err.message || 'Server may be offline.') + '</p>' +
+                    '<p style="margin-top:1rem; font-size:0.85rem;">Showing static demo listings below.</p></div>';
+            }
+        }
+    }
+
+    function searchListings() {
+        currentPage = 1;
+        loadListings(1, false);
+    }
+
+    function loadMore() {
+        currentPage++;
+        loadListings(currentPage, true);
+    }
+
+    async function viewDetails(id) {
+        const modal = document.getElementById('detailModal');
+        const content = document.getElementById('modalContent');
+        content.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--text-muted);">Loading details...</div>';
+        modal.classList.add('show');
+
+        try {
+            const h = await API.getListingDetail(id);
+            const price = Number(h.unit_price).toLocaleString();
+            const farmer = h.user || {};
+            const rating = h.farmer_rating || {};
+            const ratingText = rating.avg ? rating.avg.toFixed(1) + '/5 (' + rating.count + ' reviews)' : 'No reviews yet';
+            const initials = (farmer.full_name || 'NA').split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
+
+            const imgs = h.harvest_image || [];
+            let imgsHtml = '';
+            if (imgs.length > 0) {
+                imgsHtml = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:0.5rem;margin-bottom:1rem;">';
+                imgs.forEach(img => {
+                    imgsHtml += '<div style="border-radius:10px;overflow:hidden;aspect-ratio:1;background:#f5f5f5;"><img src="' + CONFIG.API_BASE_URL + img.img_url + '" alt="" style="width:100%;height:100%;object-fit:cover;" /></div>';
+                });
+                imgsHtml += '</div>';
+            }
+
+            content.innerHTML =
+                '<h3>' + h.name + '</h3>' +
+                imgsHtml +
+                '<div class="detail-price">GH₵ ' + price + ' <span style="font-size:0.9rem;color:var(--text-muted);font-family:DM Sans,sans-serif;">/ ' + (h.unit || 'unit') + '</span></div>' +
+                '<div class="detail-row"><span class="detail-label">Category</span><span class="detail-value">' + h.category + '</span></div>' +
+                '<div class="detail-row"><span class="detail-label">Available</span><span class="detail-value">' + Number(h.quantity).toLocaleString() + ' ' + (h.unit || 'units') + '</span></div>' +
+                '<div class="detail-row"><span class="detail-label">Location</span><span class="detail-value">' + (h.location || farmer.location || 'Ghana') + '</span></div>' +
+                (h.description ? '<div class="detail-row" style="flex-direction:column;"><span class="detail-label" style="margin-bottom:0.3rem;">Description</span><span class="detail-value" style="text-align:left;font-weight:400;">' + h.description + '</span></div>' : '') +
+                '<div style="margin-top:1.2rem;padding:1rem;background:var(--cream);border-radius:10px;display:flex;align-items:center;gap:1rem;">' +
+                    '<div style="width:44px;height:44px;border-radius:50%;background:var(--green-dark);color:var(--cream);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;flex-shrink:0;">' + initials + '</div>' +
+                    '<div><div style="font-weight:600;color:var(--green-dark);">' + (farmer.full_name || 'Farmer') + '</div>' +
+                    '<div style="font-size:0.85rem;color:var(--text-muted);">' + (farmer.location || '') + ' &middot; ' + ratingText + '</div></div>' +
+                '</div>' +
+                '<div class="detail-actions">' +
+                    (Auth.isLoggedIn()
+                        ? '<a href="dashboard.html?order=' + h.id + '" class="btn-order">Place Order</a>'
+                        : '<a href="login.html" class="btn-order">Login to Order</a>') +
+                    '<button class="btn-msg" onclick="closeModal()">Close</button>' +
+                '</div>';
+        } catch (err) {
+            content.innerHTML = '<div style="text-align:center;padding:2rem;"><h3 style="color:var(--green-dark);">Could not load details</h3><p style="color:var(--text-muted);">' + (err.message || 'Unknown error') + '</p><button class="btn-msg" onclick="closeModal()" style="margin-top:1rem;">Close</button></div>';
+        }
+    }
+
+    function closeModal() {
+        document.getElementById('detailModal').classList.remove('show');
+    }
+
+    // Load categories from backend into the filter dropdown
+    async function loadCategories() {
+        try {
+            const categories = await API.getCategories();
+            const select = document.getElementById('categoryFilter');
+            // Keep the "All Crops" option, replace the rest
+            select.innerHTML = '<option value="">All Crops</option>';
+            categories.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c.category;
+                opt.textContent = c.category;
+                select.appendChild(opt);
+            });
+        } catch (e) {
+            // Keep the hardcoded options as fallback
+        }
+    }
+
+    // Initial load
+    document.addEventListener('DOMContentLoaded', () => {
+        loadCategories();
+        loadListings(1, false);
+    });
+</script>
 
 </body>
 </html>
