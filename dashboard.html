@@ -272,6 +272,34 @@
     </div>
 </div>
 
+<!-- ORDER PLACEMENT MODAL -->
+<div class="modal-overlay" id="orderModal" onclick="if(event.target===this)closeOrderModal()">
+    <div class="modal-card">
+        <button class="modal-close" onclick="closeOrderModal()">&times;</button>
+        <h3>Place Order</h3>
+        <div id="orderHarvestInfo" style="background:#f9f9f6;border-radius:10px;padding:1rem;margin-bottom:1.2rem;">
+            <p style="margin:0;color:var(--text-muted);font-size:0.85rem;">Loading harvest details...</p>
+        </div>
+        <div class="form-group">
+            <label>Quantity</label>
+            <div style="display:flex;gap:0.5rem;align-items:center;">
+                <input type="number" id="orderQuantity" min="1" placeholder="e.g. 50" style="flex:1;" />
+                <span id="orderUnit" style="color:var(--text-muted);font-size:0.9rem;"></span>
+            </div>
+            <p id="orderAvailable" style="font-size:0.8rem;color:var(--text-muted);margin-top:0.3rem;"></p>
+        </div>
+        <div class="form-group">
+            <label>Note (optional)</label>
+            <textarea id="orderNote" rows="2" placeholder="Any special requests or delivery notes..."></textarea>
+        </div>
+        <div id="orderTotalRow" style="display:flex;justify-content:space-between;align-items:center;padding:0.8rem 0;border-top:1px solid #eee;margin-top:0.5rem;">
+            <span style="font-weight:600;color:var(--green-dark);">Estimated Total</span>
+            <span id="orderTotal" style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--green-dark);font-weight:700;">GH₵ 0</span>
+        </div>
+        <button class="modal-submit" id="orderSubmitBtn" onclick="submitOrder()">Place Order</button>
+    </div>
+</div>
+
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
@@ -698,12 +726,106 @@
         });
     }
 
+    // ─── Order Placement Modal ─────────────────
+    let orderHarvestData = null;
+
+    async function openOrderModal(harvestId) {
+        orderHarvestData = null;
+        document.getElementById('orderQuantity').value = '';
+        document.getElementById('orderNote').value = '';
+        document.getElementById('orderTotal').textContent = 'GH₵ 0';
+        document.getElementById('orderAvailable').textContent = '';
+        document.getElementById('orderUnit').textContent = '';
+        document.getElementById('orderHarvestInfo').innerHTML = '<p style="margin:0;color:var(--text-muted);font-size:0.85rem;">Loading harvest details...</p>';
+        document.getElementById('orderModal').classList.add('show');
+
+        try {
+            const h = await API.getListingDetail(harvestId);
+            orderHarvestData = h;
+            const price = Number(h.unit_price).toLocaleString();
+            const farmer = h.user || {};
+            document.getElementById('orderHarvestInfo').innerHTML =
+                '<div style="font-weight:600;color:var(--green-dark);font-size:1.05rem;margin-bottom:0.3rem;">' + h.name + '</div>' +
+                '<div style="font-size:0.85rem;color:var(--text-muted);">' +
+                    h.category + ' &middot; GH₵ ' + price + '/' + h.unit +
+                    (farmer.full_name ? ' &middot; by ' + farmer.full_name : '') +
+                    (h.location ? ' &middot; ' + h.location : '') +
+                '</div>';
+            document.getElementById('orderUnit').textContent = h.unit;
+            document.getElementById('orderAvailable').textContent = 'Available: ' + h.quantity + ' ' + h.unit;
+            document.getElementById('orderQuantity').max = h.quantity;
+        } catch (err) {
+            document.getElementById('orderHarvestInfo').innerHTML =
+                '<p style="margin:0;color:#dc3545;">Could not load harvest details: ' + (err.message || 'Unknown error') + '</p>';
+        }
+    }
+
+    function closeOrderModal() {
+        document.getElementById('orderModal').classList.remove('show');
+        orderHarvestData = null;
+    }
+
+    // Live total calculation
+    document.getElementById('orderQuantity').addEventListener('input', function() {
+        if (!orderHarvestData) return;
+        const qty = parseInt(this.value) || 0;
+        const total = qty * Number(orderHarvestData.unit_price);
+        document.getElementById('orderTotal').textContent = 'GH₵ ' + total.toLocaleString();
+    });
+
+    async function submitOrder() {
+        if (!orderHarvestData) { showToast('Harvest data not loaded', 'error'); return; }
+        const quantity = parseInt(document.getElementById('orderQuantity').value);
+        const note = document.getElementById('orderNote').value.trim();
+
+        if (!quantity || quantity < 1) { showToast('Please enter a valid quantity', 'error'); return; }
+        if (quantity > orderHarvestData.quantity) {
+            showToast('Quantity exceeds available stock (' + orderHarvestData.quantity + ' ' + orderHarvestData.unit + ')', 'error');
+            return;
+        }
+
+        const btn = document.getElementById('orderSubmitBtn');
+        btn.disabled = true;
+        btn.textContent = 'Placing order...';
+
+        try {
+            await API.createOrder(orderHarvestData.id, quantity, note || undefined);
+            showToast('Order placed successfully!');
+            closeOrderModal();
+            loadOrders();
+            loadStats();
+            // Switch to orders tab
+            const ordersTab = document.querySelector('.dash-tab');
+            const allTabs = document.querySelectorAll('.dash-tab');
+            allTabs.forEach(t => { if (t.textContent === 'Orders') switchTab('orders', t); });
+        } catch (err) {
+            showToast(err.message || 'Failed to place order', 'error');
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'Place Order';
+        }
+    }
+
     // ─── Init ───────────────────────────────────
     loadOrders();
     loadHistory();
     loadProfile();
     loadStats();
     if (isFarmer) loadHarvests();
+
+    // Handle ?order=<harvestId> from marketplace
+    (function checkOrderParam() {
+        const params = new URLSearchParams(window.location.search);
+        const harvestId = params.get('order');
+        if (harvestId && !isFarmer) {
+            openOrderModal(parseInt(harvestId));
+            // Clean URL without reload
+            window.history.replaceState({}, '', 'dashboard.html');
+        } else if (harvestId && isFarmer) {
+            showToast('Only buyers can place orders', 'error');
+            window.history.replaceState({}, '', 'dashboard.html');
+        }
+    })();
 </script>
 </body>
 </html>
